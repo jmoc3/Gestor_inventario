@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Permits {
+  id Int @id @default(autoincrement())
+  name String 
+  description String
+  roles_permits Roles_permit[]
+}
+
+model Roles {
+  id Int @id @default(autoincrement())
+  name String
+  roles_permits Roles_permit[]
+  user Users[]
+}
+
+model Roles_permit {
+  id Int @id @default(autoincrement())
+  rol_id Int 
+  permit_id Int 
+  rol Roles @relation(fields: [rol_id], references: [id])
+  permit Permits @relation(fields: [permit_id], references: [id])
+}
+
+model Users {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String 
+  password String
+  id_rol Int 
+  rol Roles @relation(fields: [id_rol], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Supliers {
+  id Int @id @default(autoincrement())
+  name String
+  location String
+  products Products[]
+}
+
+model Customers {
+  id Int @id @default(autoincrement())
+  cc String @unique
+  name String
+  age String
+  email String
+  bills Bills[]
+}
+
+model Bills {
+  id Int @id @default(autoincrement())
+  customer_id Int
+  createdAt DateTime @default(now())
+  customer Customers @relation(fields: [customer_id], references: [id])
+  detail Details[]
+}
+
+model Products {
+  id Int @id @default(autoincrement())
+  name String
+  quantity Int
+  price Decimal @db.Decimal(10,2)
+  suplier_id Int
+  suplier Supliers @relation(fields: [suplier_id], references: [id])
+  product Details[]
+}
+
+model Details {
+  id Int @id @default(autoincrement())
+  product_id Int
+  quantity Int
+  price Decimal @db.Decimal(10,2)
+  bill_id Int
+  product Products @relation(fields: [product_id], references: [id])
+  bill Bills @relation(fields: [bill_id], references: [id])
+}
