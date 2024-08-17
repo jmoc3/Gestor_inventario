@@ -1,29 +1,24 @@
-'use client'
-
 import { Top } from "./main/Top";
 import { TableMain } from "./main/Table";
-import { useEffect } from "react";
 import { useProductStore } from "../store/products";
+import { CircularProgress } from "@nextui-org/react";
 
 export function Main():JSX.Element{
-
-    const {  setProducts } = useProductStore()
-
-    useEffect(()=>{
-        const fetchingData = async()=>{
-            const res = await fetch("/api/data")
-            const data = await res.json()
-            setProducts(data)
-            console.log("done")
-        }
-
-        fetchingData()
-    },[])
+    
+    const {products} = useProductStore()
 
     return(
         <div className="mx-32">
+          <div className="leftMain w-2/4 h-[80vh] flex flex-col items-center border-r border-zinc-500">
             <Top title="Products" />
-            <TableMain/>
+            {
+            products.length!=0 ? 
+            <TableMain/> : <CircularProgress aria-label="Loading..." />               
+        }
+          </div>
+          <div className="rightMain">
+            
+          </div>
         </div>
     )
 }
