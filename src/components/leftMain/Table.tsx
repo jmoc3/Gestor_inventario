@@ -42,7 +42,7 @@ export function TableMain():JSX.Element{
               />
             </div>
           }
-          className="px-16"
+          className="h-4/6 px-16"
         >
           <TableHeader>
             <TableColumn key="id">{toCapitalize("id")}</TableColumn>
