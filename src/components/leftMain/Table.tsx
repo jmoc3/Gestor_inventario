@@ -1,22 +1,30 @@
 'use client'
 
 import { useProductStore } from "@/src/store/products";
-import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, getKeyValue} from "@nextui-org/react";
+import { InputTextContext } from "../Main";
 
 function toCapitalize(text:string) {
-  if (text.length === 0) return text; // Manejar cadenas vacías
+  if (text.length === 0) return text;
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 export function TableMain():JSX.Element{
 
-      const { products } = useProductStore()
+      const { products, setProducts } = useProductStore()
       const [page, setPage] = useState(1);
+      const inputText = useContext(InputTextContext)
 
+    // useEffect(() => {
+    //   if (inputText !== "") {
+    //     const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));
+    //     setProducts(productsFiltered);
+    //   }
+    // }, [inputText, products, setProducts]);
+  
       const rowsPerPage = 10;
-    
+
       const pages = Math.ceil(products.length / rowsPerPage);
 
       const productsPerPage = useMemo(() => {

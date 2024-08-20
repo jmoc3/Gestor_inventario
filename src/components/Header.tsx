@@ -11,7 +11,7 @@ export function Header():JSX.Element{
             <div className="flex ">
                 <ul className="flex items-center cursor-pointer ">
                     <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Products</li>
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Clients</li>
+                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Customers</li>
                     <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Supliers</li>
                 </ul>
             </div>
