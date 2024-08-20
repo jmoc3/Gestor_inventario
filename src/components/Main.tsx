@@ -70,10 +70,13 @@ export function Main():JSX.Element{
                   <h4 className="text-3xl">Data distribution</h4>
                 <BsArrowRightSquareFill className="opacity-[0.4] hover:opacity-[0.7] cursor-pointer"/>
               </div>
-              <div className="h-3/4 flex-col justify-center items-center text-center">
-                <span className="opacity-[0.4]">Product - Quantity</span>
-                <BarChart labels={labels} quantity={quantity} />
-              </div>
+                {
+                  products.length!=0 ? 
+                  <div className="w-full h-3/4 flex flex-col justify-center items-center text-center">
+                    <span className="opacity-[0.4]">Product - Quantity</span>
+                    <BarChart labels={labels} quantity={quantity} /> 
+                  </div> : <CircularProgress aria-label="Loading..." />
+                }
             </div>
           </div>
         </div>
