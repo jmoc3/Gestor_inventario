@@ -1,9 +1,8 @@
 'use client'
 
 import { useProductStore } from "@/src/store/products";
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useMemo } from "react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, getKeyValue} from "@nextui-org/react";
-import { InputTextContext } from "../Main";
 
 function toCapitalize(text:string) {
   if (text.length === 0) return text;
@@ -12,28 +11,22 @@ function toCapitalize(text:string) {
 
 export function TableMain():JSX.Element{
 
-      const { products, setProducts } = useProductStore()
+      const { products, productsCopy } = useProductStore()
       const [page, setPage] = useState(1);
-      const inputText = useContext(InputTextContext)
+      
+      productsCopy
 
-    // useEffect(() => {
-    //   if (inputText !== "") {
-    //     const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));
-    //     setProducts(productsFiltered);
-    //   }
-    // }, [inputText, products, setProducts]);
-  
-      const rowsPerPage = 10;
+      const rowsPerPage = 9;
 
-      const pages = Math.ceil(products.length / rowsPerPage);
+      const pages = Math.ceil(productsCopy.length / rowsPerPage);
 
       const productsPerPage = useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
     
-        return products.slice(start, end);
-      }, [page, products]);
-    
+        return productsCopy.slice(start, end);
+      }, [page, productsCopy]);
+
       return (
         <Table 
           isStriped

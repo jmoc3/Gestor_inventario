@@ -13,18 +13,17 @@ export const InputTextContext = createContext('');
 export function Main():JSX.Element{
   
     const [inputText, setInputText] = useState('')
-    const {products} = useProductStore()
+    const {products, productsCopy} = useProductStore()
 
-    const labels = products.map(e => e.name)
-    const quantity = products.map(e => e.quantity)
-    const prices = products.map(e=>e.price)
+    const labels = productsCopy.map(e => e.name)
+    const quantity = productsCopy.map(e => e.quantity)
+    const prices = productsCopy.map(e=>e.price)
     let emptyCount = 0;
 
-    products.forEach(obj => {
+    productsCopy.forEach(obj => {
       Object.values(obj).forEach(value => {
         if (value === null || value === undefined || value === '' ) {
           emptyCount++;
-          console.log(emptyCount)
         }
       });
     });
@@ -51,16 +50,18 @@ export function Main():JSX.Element{
                 <div className="flex flex-col items-center gap-4">
                   <span className="opacity-[0.4]">Price</span>
                   <div className="grid  grid-rows-2 grid-cols-2 ">
-                    <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Mean:</span><span>{ products.length!=0 ? (prices.reduce((a,b) => (+a)+(+b),0)/products.length).toFixed(2) : "0"}</span></div>
-                    <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Min:</span><span>{ products.length!=0 ? Math.min(...prices):"0"}</span></div>
-                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Std:</span><span>{products.length!=0 ? (+std(prices)).toFixed(2) : "0"}</span></div>
-                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Max:</span><span>{products.length!=0 ? Math.max(...prices): "0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Mean:</span><span>{ productsCopy.length!=0 ? (prices.reduce((a,b) => (+a)+(+b),0)/productsCopy.length).toFixed(2) : "0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Min:</span><span>{ productsCopy.length!=0 ? Math.min(...prices):"0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Std:</span><span>{productsCopy.length!=0 ? (+std(prices)).toFixed(2) : "0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Max:</span><span>{productsCopy.length!=0 ? Math.max(...prices): "0"}</span></div>
                   </div>
                 </div>
                 <div className="flex flex-col items-center gap-4">
                   <span className="opacity-[0.4]">Table</span>
-                  <div className="flex gap-2 p-4 justify-center  border-b-1 border-zinc-400"><span className="font-semibold">Empty fields:</span><span>{ products.length!=0 ? emptyCount : "0"}</span></div>
-                  <div className="flex gap-2 p-4 justify-center "><span className="font-semibold">Rows:</span><span>{products.length}</span></div>
+                  <div>
+                    <div className="flex gap-2 p-4 justify-center  border-b-1 border-zinc-400"><span className="font-semibold">Empty fields:</span><span>{ productsCopy.length!=0 ? emptyCount : "0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center "><span className="font-semibold">Rows:</span><span>{productsCopy.length}</span></div>
+                  </div>
                 </div>
               </div>
               </div>
