@@ -1,5 +1,8 @@
 import { create } from "zustand";
 import { Product } from "../types/types";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient()
 
 type States = {
     products: Product[],

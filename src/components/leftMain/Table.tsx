@@ -13,20 +13,17 @@ export function TableMain():JSX.Element{
 
       const { products, productsCopy } = useProductStore()
       const [page, setPage] = useState(1);
-      
-      productsCopy
 
       const rowsPerPage = 9;
-
       const pages = Math.ceil(productsCopy.length / rowsPerPage);
-
+    
       const productsPerPage = useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
-    
+
         return productsCopy.slice(start, end);
       }, [page, productsCopy]);
-
+      
       return (
         <Table 
           isStriped
@@ -46,11 +43,11 @@ export function TableMain():JSX.Element{
           className="h-4/6 px-16"
         >
           <TableHeader>
-            <TableColumn key="id">{toCapitalize("id")}</TableColumn>
-            <TableColumn key="name">{toCapitalize("name")}</TableColumn>
-            <TableColumn key="quantity">{toCapitalize("quantity")}</TableColumn>
-            <TableColumn key="price">{`${toCapitalize("price")}`}</TableColumn>
-            <TableColumn key="suplier_id">{toCapitalize("suplier_id")}</TableColumn>
+            {
+              Object.keys(products[0]).map(e=>(
+                <TableColumn key={e}>{toCapitalize(e)}</TableColumn>
+              ))
+            }
           </TableHeader>
           <TableBody items={productsPerPage}>
             {(item) => (

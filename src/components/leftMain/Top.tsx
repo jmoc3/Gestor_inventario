@@ -7,9 +7,9 @@ export function TopLeft({title}:{title:string}):JSX.Element{
 
     const inputChangeController = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputText = e.target.value
-        const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));      
+        const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));     
+        console.log(productsFiltered) 
         setProductsCopy(productsFiltered)
-        console.log(products, productsCopy)
     }
 
     return (
@@ -19,7 +19,7 @@ export function TopLeft({title}:{title:string}):JSX.Element{
                 <span>Search some {title.slice(0,-1).toLowerCase()}</span>
                 <div className="flex  gap-8 justify-center items-center">
 
-                    <Input isClearable variant="faded" name="searchContent" placeholder="search bar" onChange={inputChangeController}/>
+                    <Input isClearable variant="faded" name="searchContent" placeholder="search bar" onChange={inputChangeController} onClear={()=>setProductsCopy(products)}/>
             
                 </div>
             </div>

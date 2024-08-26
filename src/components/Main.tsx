@@ -5,13 +5,15 @@ import { CircularProgress } from "@nextui-org/react";
 import {BarChart} from "./rightMain/Barchart"
 import { BsArrowRightSquareFill, BsArrowLeftSquareFill  } from "react-icons/bs";
 import {std} from "mathjs"
-import { useState, createContext } from "react";
+import { useState, createContext, useContext } from "react";
+import { SectionProvider } from "../app/page";
 
 export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
 export const InputTextContext = createContext('');
 
 export function Main():JSX.Element{
   
+    const section = useContext(SectionProvider)
     const [inputText, setInputText] = useState('')
     const {products, productsCopy} = useProductStore()
 
@@ -33,7 +35,7 @@ export function Main():JSX.Element{
           <div className="w-2/4 h-[80vh] flex flex-col items-center border-r border-zinc-500">
           <setInputTextContext.Provider value={setInputText}>
             <InputTextContext.Provider value={inputText}>
-            <TopLeft title="Products" />
+            <TopLeft title={section} />
             {
               products.length!=0 ? 
             <TableMain/> : <CircularProgress aria-label="Loading..." />               
@@ -46,16 +48,20 @@ export function Main():JSX.Element{
               <div className="flex flex-col items-center">
                 <h4 className="text-3xl">Stadistic Information</h4>
               </div>
-              <div className="w-full flex gap-[5rem]">
+              <div className="w-full flex gap-[5rem] justify-center">
+                  {
+                    productsCopy.length!=0 && Object.keys(productsCopy[0]).includes("price") ?(
                 <div className="flex flex-col items-center gap-4">
-                  <span className="opacity-[0.4]">Price</span>
+
+                    <span className="opacity-[0.4]">Price</span>
                   <div className="grid  grid-rows-2 grid-cols-2 ">
                     <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Mean:</span><span>{ productsCopy.length!=0 ? (prices.reduce((a,b) => (+a)+(+b),0)/productsCopy.length).toFixed(2) : "0"}</span></div>
                     <div className="flex gap-2 p-4 justify-center border-b-1 border-zinc-400"><span className="font-semibold">Min:</span><span>{ productsCopy.length!=0 ? Math.min(...prices):"0"}</span></div>
-                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Std:</span><span>{productsCopy.length!=0 ? (+std(prices)).toFixed(2) : "0"}</span></div>
+                    <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Std:</span><span>{productsCopy.length!=0 && productsCopy ? (+std(prices)).toFixed(2) : "0"}</span></div>
                     <div className="flex gap-2 p-4 justify-center border-zinc-400"><span className="font-semibold">Max:</span><span>{productsCopy.length!=0 ? Math.max(...prices): "0"}</span></div>
                   </div>
-                </div>
+                </div>) : <></>
+                  }
                 <div className="flex flex-col items-center gap-4">
                   <span className="opacity-[0.4]">Table</span>
                   <div>

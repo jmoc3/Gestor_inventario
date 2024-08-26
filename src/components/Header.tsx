@@ -1,8 +1,24 @@
-import React from "react"
+import React, { useState, useEffect, useContext } from "react"
 import Image from "next/image"
 import { BsGrid3X3GapFill } from "react-icons/bs";
+import { SetSectionProvider } from "../app/page";
 
 export function Header():JSX.Element{
+    const setSection = useContext(SetSectionProvider)
+    const [header, setHeader] = useState<string>("")
+    const userHeaders = ["Products","Customers","Supliers"]
+
+    useEffect(()=>{
+        const fetchingData = async()=>{
+          const res = await (await fetch("api/dbInfo")).json() 
+          const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
+          const header = generalHeaders.filter((e:string) => userHeaders.includes(e))
+          console.log(header)
+        
+        }
+        fetchingData()
+       },[])
+    
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
             <div className="flex w-22 h-fit rounded-full overflow-hidden ">
@@ -10,9 +26,9 @@ export function Header():JSX.Element{
             </div>
             <div className="flex ">
                 <ul className="flex items-center cursor-pointer ">
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Products</li>
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Customers</li>
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300">Supliers</li>
+                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Products")}>Products</li>
+                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Customers")}>Customers</li>
+                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Supliers")}>Supliers</li>
                 </ul>
             </div>
             <div className="flex justify-center items-center cursor-pointer">
