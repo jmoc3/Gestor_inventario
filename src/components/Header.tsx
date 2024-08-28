@@ -2,23 +2,38 @@ import React, { useState, useEffect, useContext } from "react"
 import Image from "next/image"
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import { SetSectionProvider } from "../app/page";
+import { useProductStore } from "../store/products";
 
 export function Header():JSX.Element{
     const setSection = useContext(SetSectionProvider)
-    const [header, setHeader] = useState<string>("")
+
+    const { fetchData, setProducts, setProductsCopy } = useProductStore()
+    const [header, setHeader] = useState<string[]>([])
     const userHeaders = ["Products","Customers","Supliers"]
 
     useEffect(()=>{
-        const fetchingData = async()=>{
+        const fetchingDbData = async()=>{
           const res = await (await fetch("api/dbInfo")).json() 
           const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
           const header = generalHeaders.filter((e:string) => userHeaders.includes(e))
-          console.log(header)
-        
+          setHeader(header.reverse())
         }
-        fetchingData()
+        
+        fetchingDbData()
        },[])
     
+    const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
+        setSection!(header)
+
+        const fetchingTableData = async()=> {
+            const res = await fetchData(header.toLowerCase())
+            setProducts(res)
+            setProductsCopy(res)
+        }
+        
+        fetchingTableData()    
+    }
+
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
             <div className="flex w-22 h-fit rounded-full overflow-hidden ">
@@ -26,9 +41,11 @@ export function Header():JSX.Element{
             </div>
             <div className="flex ">
                 <ul className="flex items-center cursor-pointer ">
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Products")}>Products</li>
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Customers")}>Customers</li>
-                    <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={()=>setSection!("Supliers")}>Supliers</li>
+                    {
+                        header.map(item=>(
+                            <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={liClickEvent(item)}>{item}</li>
+                        ))
+                    }
                 </ul>
             </div>
             <div className="flex justify-center items-center cursor-pointer">

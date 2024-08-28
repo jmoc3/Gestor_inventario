@@ -9,16 +9,13 @@ export const SectionProvider = createContext<string>("")
 export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
 
 export default function Home() {
-  const [section, setSection] = useState<string>("Customers")
-  const { setProducts, setProductsCopy} = useProductStore()
+  const [section, setSection] = useState<string>("Products")
+  const { setProducts, setProductsCopy, fetchData} = useProductStore()
 
   useEffect(()=>{
     const fetchingData = async()=>{
-        let res = null
-        if (section=="Products") res = await fetch("/api/products")
-        if (section=="Customers") res = await fetch("/api/customers")
-        if (section=="Supliers") res = await fetch("/api/supliers")
-        const data = await res!.json()
+        const data = await fetchData("products")
+      
         setProducts(data)
         setProductsCopy(data)
       }
