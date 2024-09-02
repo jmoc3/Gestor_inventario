@@ -8,8 +8,12 @@ import { useState, useEffect, createContext } from "react";
 export const SectionProvider = createContext<string>("")
 export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
 
+export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
+export const InputTextContext = createContext('');
+
 export default function Home() {
   const [section, setSection] = useState<string>("Products")
+  const [inputText, setInputText] = useState('')
   const { setProducts, setProductsCopy, fetchData} = useProductStore()
 
   useEffect(()=>{
@@ -25,10 +29,11 @@ export default function Home() {
   return (
     <main className={`w-full min-h-screen`}>
       <SectionProvider.Provider value={section} >
-      <SetSectionProvider.Provider value={setSection}>
-        <Header />
-      </SetSectionProvider.Provider>
-        <Main />
+            <SetSectionProvider.Provider value={setSection}>
+              <Header />
+            </SetSectionProvider.Provider>
+            
+            <Main />
       </SectionProvider.Provider >
       </main>
   );

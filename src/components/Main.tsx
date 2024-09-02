@@ -5,16 +5,12 @@ import { CircularProgress } from "@nextui-org/react";
 import {BarChart} from "./rightMain/Barchart"
 import { BsArrowRightSquareFill, BsArrowLeftSquareFill  } from "react-icons/bs";
 import {std} from "mathjs"
-import { useState, createContext, useContext } from "react";
+import { useContext } from "react";
 import { SectionProvider } from "../app/page";
-
-export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
-export const InputTextContext = createContext('');
 
 export function Main():JSX.Element{
   
     const section = useContext(SectionProvider)
-    const [inputText, setInputText] = useState('')
     const {products, productsCopy} = useProductStore()
 
     const labels = productsCopy.map(e => e.name)
@@ -33,15 +29,12 @@ export function Main():JSX.Element{
     return(
       <div className="mx-32 flex">
           <div className="w-2/4 h-[80vh] flex flex-col items-center border-r border-zinc-500">
-          <setInputTextContext.Provider value={setInputText}>
-            <InputTextContext.Provider value={inputText}>
+
             <TopLeft title={section} />
             {
               products.length!=0 ? 
             <TableMain/> : <CircularProgress aria-label="Loading..." />               
         }
-            </InputTextContext.Provider>
-          </setInputTextContext.Provider >
           </div>
           <div className="w-2/4 h-[80vh] flex flex-col items-center ">
             <div className="h-[40%] flex flex-col justify-center items-center gap-6">

@@ -6,9 +6,9 @@ import { useProductStore } from "../store/products";
 
 export function Header():JSX.Element{
     const setSection = useContext(SetSectionProvider)
-
-    const { fetchData, setProducts, setProductsCopy } = useProductStore()
-    const [header, setHeader] = useState<string[]>([])
+    
+    const { input, fetchData, setProducts, setProductsCopy } = useProductStore()
+    const [headers, setHeader] = useState<string[]>([])
     const userHeaders = ["Products","Customers","Supliers"]
 
     useEffect(()=>{
@@ -28,7 +28,8 @@ export function Header():JSX.Element{
         const fetchingTableData = async()=> {
             const res = await fetchData(header.toLowerCase())
             setProducts(res)
-            setProductsCopy(res)
+            const productsFiltered = res.filter(e => e.name.toLowerCase().includes(input));     
+            setProductsCopy(productsFiltered)   
         }
         
         fetchingTableData()    
@@ -42,7 +43,7 @@ export function Header():JSX.Element{
             <div className="flex ">
                 <ul className="flex items-center cursor-pointer ">
                     {
-                        header.map(item=>(
+                        headers.map(item=>(
                             <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={liClickEvent(item)}>{item}</li>
                         ))
                     }

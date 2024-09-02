@@ -3,12 +3,13 @@ import { useProductStore } from "@/src/store/products";
 
 export function TopLeft({title}:{title:string}):JSX.Element{
 
-    const {products, productsCopy, setProductsCopy} = useProductStore()
+    const {products, productsCopy, setInput, setProductsCopy} = useProductStore()
 
     const inputChangeController = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputText = e.target.value
         const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));     
         setProductsCopy(productsFiltered)
+        setInput(inputText)
     }
 
     return (
