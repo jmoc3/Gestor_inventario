@@ -1,12 +1,14 @@
 import React from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, ArcElement, BarElement, Tooltip } from 'chart.js';
+import { Bar, Doughnut, PolarArea } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, ArcElement, PolarAreaController, RadialLinearScale,  BarElement, Tooltip } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
   ArcElement,
+  PolarAreaController,
+  RadialLinearScale,
   Tooltip,
 );
 
@@ -30,7 +32,10 @@ export function BarChart ({labels, quantity, type}:{labels:string[],quantity:num
     responsive: true
     };
 
-  if (type == "bar") return <Bar data={data} options={options} className='w-full h-full'/>;
-  if (type == "dou") return <Doughnut data={data} options={options} className=''/>;
+  if (type == "bar") return <div className='w-3/4'><Bar data={data} options={options} className='w-full h-full'/></div>;
+  if (type == "dou") return <div><Doughnut data={data} options={options} className='w-full h-full'/></div>;
+  if (type == "polar") return <div><PolarArea data={data} options={options} />
+</div>
+
 };
 

@@ -46,7 +46,7 @@ model Users {
   updatedAt DateTime @updatedAt
 }
 
-model Supliers {
+model Suppliers {
   id Int @id @default(autoincrement())
   name String
   location String
@@ -75,8 +75,8 @@ model Products {
   name String
   quantity Int
   price Decimal @db.Decimal(10,2)
-  suplier_id Int
-  suplier Supliers @relation(fields: [suplier_id], references: [id])
+  supplier_id Int
+  supplier Suppliers @relation(fields: [supplier_id], references: [id])
   product Details[]
 }
 

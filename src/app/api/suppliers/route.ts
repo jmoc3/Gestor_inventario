@@ -4,6 +4,6 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export async function GET(){
-    const supliers = await prisma.supliers.findMany()
+    const supliers = await prisma.suppliers.findMany()
     return NextResponse.json(supliers)
 }

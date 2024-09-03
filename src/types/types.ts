@@ -3,7 +3,7 @@ type Product = {
     name: string,
     quantity: number,
     price:number,
-    suplier_id: number,
+    supplier_id: number,
     location?:string,
     age?:string,
     email?:string

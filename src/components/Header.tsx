@@ -9,7 +9,7 @@ export function Header():JSX.Element{
     
     const { input, fetchData, setProducts, setProductsCopy } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
-    const userHeaders = ["Products","Customers","Supliers"]
+    const userHeaders = ["Products","Customers","Suppliers"]
 
     useEffect(()=>{
         const fetchingDbData = async()=>{
