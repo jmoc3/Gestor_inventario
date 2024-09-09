@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from "react"
-import Image from "next/image"
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import { SetSectionProvider } from "../app/page";
+import Image from "next/image"
+
+import React, { useState, useEffect, useContext } from "react"
 import { useProductStore } from "../store/products";
 
 export function Header():JSX.Element{

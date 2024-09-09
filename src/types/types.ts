@@ -9,4 +9,6 @@ type Product = {
     email?:string
 }
 
-export type { Product }
+type Credentials = { [key:string]:string }
+
+export type { Product, Credentials }

@@ -4,6 +4,7 @@ import { Header } from "@/src/components/Header";
 import { Main } from "@/src/components/Main";
 import { useProductStore } from "../store/products";
 import { useState, useEffect, createContext } from "react";
+import { LogIn } from "@/src/components/Login";
 
 export const SectionProvider = createContext<string>("")
 export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
@@ -13,8 +14,9 @@ export const InputTextContext = createContext('');
 
 export default function Home() {
   const [section, setSection] = useState<string>("Products")
-  const [inputText, setInputText] = useState('')
   const { setProducts, setProductsCopy, fetchData} = useProductStore()
+
+  let conditional = false
 
   useEffect(()=>{
     const fetchingData = async()=>{
@@ -28,13 +30,15 @@ export default function Home() {
 
   return (
     <main className={`w-full min-h-screen`}>
+    {
+      conditional ? (
       <SectionProvider.Provider value={section} >
-            <SetSectionProvider.Provider value={setSection}>
-              <Header />
-            </SetSectionProvider.Provider>
-            
-            <Main />
-      </SectionProvider.Provider >
-      </main>
+        <SetSectionProvider.Provider value={setSection}>
+          <Header />
+          </SetSectionProvider.Provider>
+          <Main />
+      </SectionProvider.Provider >) : <LogIn />
+    }  
+    </main>
   );
 }

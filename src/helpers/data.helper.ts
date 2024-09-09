@@ -1,15 +1,15 @@
 const countFrequencies = (arr: string[]): Record<string, number> => {
-    const frecuencias: Record<string, number> = {};
+    const frecuencies: Record<string, number> = {};
     
     arr.forEach(texto => {
-        frecuencias[texto] = (frecuencias[texto] || 0) + 1;
+      frecuencies[texto] = (frecuencies[texto] || 0) + 1;
     });
     
-    return frecuencias;
+    return frecuencies;
   };
 
-  const getTopRecords = (frecuencias: Record<string, number>, topN: number): [string, number][] => {
-    return Object.entries(frecuencias)
+  const getTopRecords = (frecuencies: Record<string, number>, topN: number): [string, number][] => {
+    return Object.entries(frecuencies)
         .sort((a, b) => b[1] - a[1])  
         .slice(0, topN);               
   };
