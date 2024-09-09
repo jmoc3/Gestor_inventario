@@ -1,44 +1,74 @@
-"use client"
+'use client'
 
-import { Header } from "@/src/components/Header";
-import { Main } from "@/src/components/Main";
-import { useProductStore } from "../store/products";
-import { useState, useEffect, createContext } from "react";
-import { LogIn } from "@/src/components/Login";
+import { Card, Input, Button, Divider, Link, useDisclosure } from "@nextui-org/react";
+import { GoogleLog } from "@/src/assets/GoogleLogo";
+import { SignUpModal } from "@/src/components/login/SignUpModal";
+import { GoMoveToStart, GoEye , GoEyeClosed } from "react-icons/go";
+import { signIn } from "next-auth/react";
+import { inputHandler } from "@/src/services/inputHadler";
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import Notify from "@/src/services/Notify";
 
-export const SectionProvider = createContext<string>("")
-export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
+const LogIn = () => {
+  
+  const [credentials, setCredentials] = useState<Record<string,string>>({})  
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const router = useRouter()
 
-export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
-export const InputTextContext = createContext('');
+  const handleSubmit:React.FormEventHandler<HTMLFormElement> = async(e) => {
+    e.preventDefault()
+    const res =  await signIn('credentials',{...credentials,redirect:false})
+    console.log
+    if (res!.error) return Notify({message:res!.error,backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'}})
 
-export default function Home() {
-  const [section, setSection] = useState<string>("Products")
-  const { setProducts, setProductsCopy, fetchData} = useProductStore()
+    router.push('/')
+  }
 
-  let conditional = false
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
-  useEffect(()=>{
-    const fetchingData = async()=>{
-        const data = await fetchData("products")
-      
-        setProducts(data)
-        setProductsCopy(data)
-      }
-    fetchingData()
-   },[])
+  return(
+    <div className="screen flex items-center justify-center w-full h-screen">
+      <Card className="w-fit px-12 py-12 space-y-12 items-center">
+        <form onSubmit={handleSubmit} className="flex h-full gap-8 " autoComplete="off">
+          <div className="leftLogin flex flex-col justify-between">
+          <legend className="text-xl">Log In</legend>
+            <Button isIconOnly color="success" aria-label="home" variant="flat" as={Link} href="/">
+              <GoMoveToStart className=" text-xl "/>
+            </Button>    
+          </div>
+          <Divider orientation="vertical" className="h-[12rem]"/>
+          <div className="inputs flex flex-col gap-6 items-end">
 
-  return (
-    <main className={`w-full min-h-screen`}>
-    {
-      conditional ? (
-      <SectionProvider.Provider value={section} >
-        <SetSectionProvider.Provider value={setSection}>
-          <Header />
-          </SetSectionProvider.Provider>
-          <Main />
-      </SectionProvider.Provider >) : <LogIn />
-    }  
-    </main>
-  );
+            <Input isRequired type="email" name="email" label="Email" value={credentials.email} className="max-w-xs" onChange={(e)=>inputHandler(e,credentials, setCredentials)} />
+            <Input isRequired name="password" type={isVisible ? "text" : "password"} label="Password" value={credentials.password} className="max-w-xs" 
+              endContent={
+                  <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                    {isVisible ? (
+                      <GoEye className="text-xl text-default-400 pointer-events-none" />
+                    ) : (
+                      <GoEyeClosed className="text-xl text-default-400 pointer-events-none" />
+                    )}
+                  </button>
+                }
+              onChange={(e)=>inputHandler(e,credentials,setCredentials)}/>
+            
+            <div className="actionsButton space-x-4">
+              <Link className="text-sm cursor-pointer" color="secondary" onPress={onOpen}>Sign Up</Link>
+              <Button color="success" variant="flat" type="submit" >Go</Button>
+              <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />
+            </div>
+          </div>
+        </form>
+        <Divider />
+
+        <Button startContent={<GoogleLog />} className="bg-white gap-[1rem] py-[1.8rem] w-3/4" onClick={()=>{signIn('google',{callbackUrl:'/'})}}>
+          <span className="text-black">Sign With Google</span>
+        </Button>
+      </Card>
+    </div>
+  )
 }
+
+export {LogIn}

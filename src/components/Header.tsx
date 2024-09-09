@@ -1,5 +1,5 @@
 import { BsGrid3X3GapFill } from "react-icons/bs";
-import { SetSectionProvider } from "../app/page";
+import { SetSectionProvider } from "../app/home/page";
 import Image from "next/image"
 
 import React, { useState, useEffect, useContext } from "react"

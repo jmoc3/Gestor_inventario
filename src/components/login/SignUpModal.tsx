@@ -18,7 +18,8 @@ export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
       await axios.post('/api/auth/register',
       { name:formData.name,
         email:formData.email,
-        password:formData.password })
+        password:formData.password,
+        id_rol: 1 })
 
       Notify({message:"User registered succesfully",backgroundColor:'#183B2A',color:'#18C764'})
       

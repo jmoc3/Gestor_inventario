@@ -5,7 +5,7 @@ import { BarInfo } from "./rightMain/BarInfo";
 import { CircularProgress } from "@nextui-org/react";
 
 import { useProductStore } from "../store/products";
-import { SectionProvider } from "../app/page";
+import { SectionProvider } from "../app/home/page";
 import { useContext } from "react";
 
 export function Main():JSX.Element{
