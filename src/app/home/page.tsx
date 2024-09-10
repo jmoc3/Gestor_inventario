@@ -15,7 +15,6 @@ export default function Home() {
   const [section, setSection] = useState<string>("Products")
   const { setProducts, setProductsCopy, fetchData} = useProductStore()
 
-  let conditional = false
 
   useEffect(()=>{
     const fetchingData = async()=>{

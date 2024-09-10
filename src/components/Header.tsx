@@ -1,6 +1,9 @@
-import { BsGrid3X3GapFill } from "react-icons/bs";
 import { SetSectionProvider } from "../app/home/page";
 import Image from "next/image"
+import { Avatar } from "@nextui-org/react";
+import {User, Link} from "@nextui-org/react";
+
+import { useSession } from "next-auth/react";
 
 import React, { useState, useEffect, useContext } from "react"
 import { useProductStore } from "../store/products";
@@ -36,6 +39,10 @@ export function Header():JSX.Element{
         fetchingTableData()    
     }
 
+    const {data:session} = useSession()
+    
+    console.log(session)
+
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
             <div className="flex w-22 h-fit rounded-full overflow-hidden ">
@@ -51,8 +58,18 @@ export function Header():JSX.Element{
                 </ul>
             </div>
             <div className="flex justify-center items-center cursor-pointer">
-                <BsGrid3X3GapFill className="text-3xl"  />
-            </div>
+            <User   
+                name={session?.user?.name}
+                description={(
+                    <Link href="https://mail.google.com/" size="sm" isExternal>
+                    {session?.user?.email}
+                    </Link>
+                )}
+                avatarProps={{
+                    src: session?.user?.image!
+                }}
+                /> 
+          </div>
         </div>
     )
 }
