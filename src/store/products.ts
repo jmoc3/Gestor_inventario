@@ -1,8 +1,5 @@
 import { create } from "zustand";
 import { Product } from "../types/types";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient()
 
 type States = {
     products: Product[],
@@ -25,6 +22,6 @@ export const useProductStore = create<States & Actions>()((set,get)=>({
     setProducts: (products)=>set({products}),
     setProductsCopy: (productsCopy)=>set({productsCopy}),
     fetchData: async(table:string) => {
-        return await (await fetch(`/api/${table}`)).json()
+        return await (await fetch(`/api/${table}/get`)).json()
     }
 }))

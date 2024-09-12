@@ -1,7 +1,6 @@
 import { SetSectionProvider } from "../app/home/page";
 import Image from "next/image"
-import {User, Link} from "@nextui-org/react";
-import PopOver from "@/src/components/PopOver"
+import PopOver from "@/src/components/UIComponents/UserListBox/PopOver"
 
 import { useSession } from "next-auth/react";
 
@@ -59,7 +58,7 @@ export function Header():JSX.Element{
             </div>
             <div className="flex justify-center items-center cursor-pointer">    
                 <PopOver name={session?.user?.name!} description={session?.user?.email!} img={session?.user?.image! }/>
-            </div>
+            </div>  
         </div>
     )
 }
