@@ -39,7 +39,7 @@ export function Header():JSX.Element{
     }
 
     const {data:session} = useSession()
-
+    console.log(session)
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
             <div className="flex w-22 h-fit rounded-full overflow-hidden ">

@@ -16,7 +16,6 @@ export async function GET(request:Request){
       
       return NextResponse.json(user?.id)
   } catch (error){
-    console.log(error)
     return NextResponse.json(error)
   } 
 

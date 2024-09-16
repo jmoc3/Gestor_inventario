@@ -1,9 +1,13 @@
 import React from "react";
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader} from "@nextui-org/react";
 import ListBox from "./ListBox";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export const UserCard = ({name, email, image}:{name:string,email:string, image:string}) => {
+
+  const {data:session} = useSession()
+  const provider = session?.user!.provider
+  const visible = provider == 'credentials'
 
   return (
     <Card shadow="none" className="border-none bg-transparent">
@@ -39,7 +43,9 @@ export const UserCard = ({name, email, image}:{name:string,email:string, image:s
         </p>
       </CardBody>
       <CardFooter className="gap-3">
-        <ListBox  />
+        {
+        visible ? <ListBox  /> : <></>
+        }   
       </CardFooter>
     </Card>
   );

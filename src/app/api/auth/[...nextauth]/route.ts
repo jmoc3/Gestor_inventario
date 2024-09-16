@@ -28,7 +28,7 @@ const handler = NextAuth({
       async authorize(credentials) {
         
         const userFound = await prisma.users.findUnique({
-            where: {    
+            where: {      
               email: credentials!.email,
             },
           })
@@ -55,13 +55,25 @@ const handler = NextAuth({
       }
     })],
     callbacks:{
-      async jwt({token,user}){
-        return {...token, ...user}
+      async signIn({user, account, profile}){
+        console.log("account",account)
+        console.log("profile",profile)
+        return true
+      },
+      async jwt({token,user, account}){
+        if (account) {
+          token.provider = account.provider;
+        }
+  
+        if (user) {
+          return { ...token, ...user };
+        }
+        return token
       },
       async session({session, token}){
-        session.user = token as any
+        session.user = {...session.user,...token} as any
         return session
-      }
+      } 
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages:{
