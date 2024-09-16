@@ -39,8 +39,6 @@ export function Header():JSX.Element{
     }
 
     const {data:session} = useSession()
-    
-    console.log(session)
 
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
@@ -50,8 +48,8 @@ export function Header():JSX.Element{
             <div className="flex ">
                 <ul className="flex items-center cursor-pointer ">
                     {
-                        headers.map(item=>(
-                            <li className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={liClickEvent(item)}>{item}</li>
+                        headers.map((item,key)=>(
+                            <li key={key} className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={liClickEvent(item)}>{item}</li>
                         ))
                     }
                 </ul>

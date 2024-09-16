@@ -3,7 +3,6 @@ import { Avatar, Button, Card, CardBody, CardFooter, CardHeader} from "@nextui-o
 import ListBox from "./ListBox";
 import { signOut } from "next-auth/react";
 
-
 export const UserCard = ({name, email, image}:{name:string,email:string, image:string}) => {
 
   return (

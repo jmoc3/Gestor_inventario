@@ -1,11 +1,26 @@
 import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Notify from "@/src/services/Notify";
 
 export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) {
 
+  const {data:session} = useSession()
   const deleteLogic = async () => {
-    const delRes = await fetch(`/api/users/delete/${1}`)
-    console.log(delRes)
+
+    const userIdResponse = await fetch(`/api/users/findOne/${session?.user?.email}`)
+  
+    if (!userIdResponse.ok) return console.log("Something went wrong") 
+    const userId = await userIdResponse.json()
+    console.log(userId)
+    const delResPromise = await fetch(`/api/users/delete/${userId}`,{
+      method: 'DELETE'
+    })
+    
+    if (delResPromise.ok) signOut()
+    else Notify({message:"User not founded in the database",backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'}})
+
   }
 
   return (
