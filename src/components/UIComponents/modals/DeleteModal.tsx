@@ -13,7 +13,7 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
   
     if (!userIdResponse.ok) return console.log("Something went wrong") 
     const userId = await userIdResponse.json()
-    console.log(userId)
+
     const delResPromise = await fetch(`/api/users/delete/${userId}`,{
       method: 'DELETE'
     })
@@ -24,7 +24,6 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
   }
 
   return (
-    <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -47,6 +46,5 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
           )}
         </ModalContent>
       </Modal>
-    </>
   );
 }

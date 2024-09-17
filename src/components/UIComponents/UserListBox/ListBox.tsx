@@ -3,24 +3,27 @@ import {Listbox, ListboxItem} from "@nextui-org/react";
 import {useDisclosure} from "@nextui-org/react";
 import {ListboxWrapper} from "./ListBoxWrapper";
 
-import DeleteModal from "../DeleteModal"
+import DeleteModal from "../modals/DeleteModal"
+import UpdateModal from "../modals/UpdateModal"
 
 export default function App() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  
+  const {isOpen:isOpenDelete, onOpen: onOpenDelete, onOpenChange:onOpenChangeDelete} = useDisclosure();
+  const {isOpen:isOpenUpdate, onOpen: onOpenUpdate, onOpenChange:onOpenChangeUpdate} = useDisclosure();
+
   return (
     <div className="flex flex-col gap-4 w-full  ">
-      <ListboxWrapper>
+      <ListboxWrapper>      
         <Listbox
           aria-label="Listbox Variants"
           color="warning"
           variant="bordered"
         >
-          <ListboxItem key="new" className="text-warning">Editar perfil</ListboxItem>
-          <ListboxItem key="delete" className="text-danger" color="danger" onPress={onOpen}>Eliminar perfil </ListboxItem>
+          <ListboxItem key="new" className="text-warning" onPress={onOpenUpdate} >Editar perfil</ListboxItem>
+          <ListboxItem key="delete" className="text-danger" color="danger" onPress={onOpenDelete}>Eliminar perfil </ListboxItem>
         </Listbox>
       </ListboxWrapper> 
-      <DeleteModal isOpen={isOpen} onOpenChange={onOpenChange} /> 
+      <UpdateModal isOpen={isOpenUpdate} onOpenChange={onOpenChangeUpdate} />
+      <DeleteModal isOpen={isOpenDelete} onOpenChange={onOpenChangeDelete} /> 
     </div>
   );
 }

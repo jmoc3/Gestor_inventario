@@ -13,21 +13,21 @@ export function Header():JSX.Element{
     const { input, fetchData, setProducts, setProductsCopy } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
     const userHeaders = ["Products","Customers","Suppliers"]
-
+    
     useEffect(()=>{
         const fetchingDbData = async()=>{
-          const res = await (await fetch("api/dbInfo")).json() 
+            const res = await (await fetch("api/dbInfo")).json() 
           const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
           const header = generalHeaders.filter((e:string) => userHeaders.includes(e))
           setHeader(header.reverse())
         }
         
         fetchingDbData()
-       },[])
+    },[])
     
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
         setSection!(header)
-
+        
         const fetchingTableData = async()=> {
             const res = await fetchData(header.toLowerCase())
             setProducts(res)
@@ -37,9 +37,9 @@ export function Header():JSX.Element{
         
         fetchingTableData()    
     }
-
+    
     const {data:session} = useSession()
-    console.log(session)
+    
     return (
         <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
             <div className="flex w-22 h-fit rounded-full overflow-hidden ">
