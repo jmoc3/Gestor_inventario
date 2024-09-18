@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Input, Link, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { inputHandler } from "@/src/services/inputHadler"
+import Notify from "@/src/services/Notify";
 
 export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) {
 
@@ -18,15 +19,17 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
   
     if (!userIdResponse.ok) return console.log("Something went wrong") 
     const userId = await userIdResponse.json()
-    console.log(userId)
-    const res = await fetch(`/api/users/update/${userId}`,{
-      method:'UPDATE',
+
+    const resUpdate = await fetch(`/api/users/update/${userId}`,{
+      method:'PUT',
       headers:{
-        'Content-type':'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
     })
-    console.log(await res.json())
+
+    if (resUpdate.ok) Notify({message:"User Updated succesfully",backgroundColor:'#183B2A',color:'#18C764'})
+
     onClose()
   }
 

@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client"
   
 const prisma = new PrismaClient()
 
-export async function GET(request:Request){
+export async function GET(req:Request){
   try{
-      const url = new URL(request.url);
+      const url = new URL(req.url);
       const email = url.pathname.split('/').pop()!; 
       
       const user = await prisma.users.findUnique({

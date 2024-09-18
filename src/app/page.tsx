@@ -20,7 +20,6 @@ export default function LogIn(){
   const handleSubmit:React.FormEventHandler<HTMLFormElement> = async(e) => {
     e.preventDefault()
     const res =  await signIn('credentials',{...credentials,redirect:false})
-    console.log(res)
     if (res!.error) return Notify({message:res!.error,backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'}})
 
     router.push('/home')

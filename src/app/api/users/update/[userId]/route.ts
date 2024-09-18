@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server"
+import { PrismaClient } from "@prisma/client"
 
-export async function UPDATE(req:Request){
+const prisma = new PrismaClient()
+
+export async function PUT(req:Request){
     try{
-        console.log(req)
-        return NextResponse.json({response:"a"})
+        const url = new URL(req.url);
+        const id = +url.pathname.split('/').pop()!; 
+
+        const data = await req.json()
+        
+        const updateUser = await prisma.users.update({
+            where: { id },
+            data,
+          })
+
+        return NextResponse.json({response:"ok"})
     }catch (error){
         return NextResponse.json(error)
     }
