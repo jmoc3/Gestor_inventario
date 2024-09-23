@@ -10,7 +10,7 @@ export async function PUT(req:Request){
 
         const data = await req.json()
         
-        const updatedUser = await prisma.users.update({
+        const updatedDetail = await prisma.details.update({
             where: { id },
             data,
           })

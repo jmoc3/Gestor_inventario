@@ -18,8 +18,8 @@ export default function App() {
           color="warning"
           variant="bordered"
         >
-          <ListboxItem key="new" className="text-warning" onPress={onOpenUpdate} >Editar perfil</ListboxItem>
-          <ListboxItem key="delete" className="text-danger" color="danger" onPress={onOpenDelete}>Eliminar perfil </ListboxItem>
+          <ListboxItem key="new" className="text-warning text-center" onPress={onOpenUpdate} >Editar perfil</ListboxItem>
+          <ListboxItem key="delete" className="text-danger text-center" color="danger" onPress={onOpenDelete}>Eliminar perfil </ListboxItem>
         </Listbox>
       </ListboxWrapper> 
       <UpdateModal isOpen={isOpenUpdate} onOpenChange={onOpenChangeUpdate} />

@@ -15,7 +15,6 @@ export default function Home() {
   const [section, setSection] = useState<string>("Products")
   const { setProducts, setProductsCopy, fetchData} = useProductStore()
 
-
   useEffect(()=>{
     const fetchingData = async()=>{
         const data = await fetchData("products")
@@ -25,7 +24,7 @@ export default function Home() {
       }
     fetchingData()
    },[])
-
+   
   return (
     <main className={`w-full min-h-screen`}>
 
