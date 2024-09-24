@@ -1,11 +1,16 @@
 import {BarChart} from "./chart/Barchart"
 import { CircularProgress } from "@nextui-org/react";
+import { useContext } from "react";
 
+import { SectionProvider } from "@/src/app/home/page";
 import { countFrequencies, getTopRecords, classifyAges } from "../../helpers/data.helper";
 import { BsChevronBarRight, BsChevronBarLeft  } from "react-icons/bs";
 import { useProductStore } from "@/src/store/products";
 
 export function BarInfo(){
+
+    const section = useContext(SectionProvider)
+
     const {products, productsCopy} = useProductStore()
     const names = productsCopy.map(e => e.name)
     const quantity = productsCopy.map(e => e.quantity)

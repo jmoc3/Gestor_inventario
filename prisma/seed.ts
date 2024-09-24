@@ -33,8 +33,9 @@ const uniqueProductsData = productsData.filter((supplier, index, self) =>
     index === self.findIndex((t) => t.name === supplier.name)
   );
 
-const billsData = Array.from({length:100}).map(()=>({
-    customer_id:faker.number.int({min:1,max:20})
+const billsData = Array.from({length:200}).map(()=>({
+    customer_id:faker.number.int({min:1,max:499}),
+    createdAt: faker.date.between({from:'2016-01-01', to:new Date()}) // Genera una fecha entre 2016 y la fecha actual
 }))
 
 const detailsData = Array.from({length:20}).map(()=>({

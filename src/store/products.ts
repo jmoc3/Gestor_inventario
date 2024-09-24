@@ -19,7 +19,7 @@ type Actions = {
 export const useProductStore = create<States & Actions>()((set,get)=>({
     products: [],
     productsCopy: [],
-    user: {name:"Jose",email:"Example@correo.com",img:""},
+    user: {},
     input: "",
     setInput: (input:string)=>set({input}),
     setProducts: (products)=>set({products}),

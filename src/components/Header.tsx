@@ -12,11 +12,9 @@ export function Header():JSX.Element{
     
     const { input, fetchData, setProducts, setProductsCopy, setUser, user } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
-    const userHeaders = ["Products","Customers","Suppliers"]
     const {data:session} = useSession()
+    const userHeaders = ["Products","Customers","Suppliers"]
     
-    console.log(session)
-
     useEffect(()=>{
         const fetchingDbData = async()=>{
             const res = await (await fetch("api/dbInfo")).json() 
@@ -24,36 +22,36 @@ export function Header():JSX.Element{
             const header = generalHeaders.filter((e:string) => userHeaders.includes(e))
             setHeader(header.reverse())
         }
-
         
-        const {name, email} = session?.user
-        setUser({name, email})
-
         const fetchingRol = async()=>{
-            const res = await (await fetch(`api/users/findOne/${session?.user.id}`)).json()
-            const rol = res.id_rol
+            const res = await (await fetch(`api/users/findOne/${session?.user.id}`)).json()  
 
-            if (rol==2) userHeaders.push(...["Bills","Details"])
-            return res.id_rol
+            if (res.id_rol==2) userHeaders.push(...["Bills","Details"])
+                return res.id_rol
         }
-
+        
+        const setSession = () =>{
+            const {name, email} = session?.user || {}
+            setUser({name, email})
+          }
+      
+        setSession()
         fetchingRol()
         fetchingDbData()
-    },[])
+    },[session])
+    
     
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
         setSection!(header)
-        console.log(headers,header)
         
         const fetchingTableData = async()=> {
             const res = await fetchData(header.toLowerCase())
             setProducts(res)
-            console.log(res)
+
             const productsFiltered = res.filter(e => {
 
                 if (!Object.keys(e).includes("name")){
                     const id = `${e.id}`
-                    console.log
                     return id.includes(input)       
                 }
                 const name = e.name.toLowerCase()

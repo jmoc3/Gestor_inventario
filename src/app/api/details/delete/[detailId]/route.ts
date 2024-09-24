@@ -9,7 +9,7 @@ export async function DELETE(request:Request){
     const url = new URL(request.url);
     const id = +url.pathname.split('/').pop()!; 
     
-    const delRes = await prisma.users.delete({
+    const delRes = await prisma.details.delete({
       where: {
         id
       }

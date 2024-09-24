@@ -7,8 +7,18 @@ export function TopLeft({title}:{title:string}):JSX.Element{
 
     const inputChangeController = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputText = e.target.value
-        const productsFiltered = products.filter(e => e.name.toLowerCase().includes(inputText));     
-        setProductsCopy(productsFiltered)
+        const productsFiltered = products.filter(e => {
+
+          if (!Object.keys(e).includes("name")){
+              const id = `${e.id}`
+              console.log
+              return id.includes(inputText)       
+          }
+          const name = e.name.toLowerCase()
+          return name.includes(inputText)
+      
+      });     
+      setProductsCopy(productsFiltered)   
         setInput(inputText)
     }
 

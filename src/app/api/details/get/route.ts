@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 export async function GET(){
     try{
 
-      const supliers = await prisma.users.findMany()
-      return NextResponse.json(supliers)
+      const details = await prisma.details.findMany()
+      return NextResponse.json(details)
     
     } catch (error){
       return NextResponse.json(error)
