@@ -6,7 +6,8 @@ type Product = {
     supplier_id: number,
     location?:string,
     age?:string,
-    email?:string
+    email?:string,
+    product_id: number
 }
 
 type Credentials = { [key:string]:string }

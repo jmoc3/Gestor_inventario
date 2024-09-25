@@ -12,7 +12,13 @@ export function BarInfo(){
     const section = useContext(SectionProvider)
 
     const {products, productsCopy} = useProductStore()
-    const names = productsCopy.map(e => e.name)
+    let names:string[] = []
+
+    if(productsCopy.length!=0 && Object.keys(productsCopy[0]).includes("name")){
+      names = productsCopy.map(e => e.name)
+    }else{
+      names = productsCopy.map(e => `${e.id}`)
+    }
     const quantity = productsCopy.map(e => e.quantity)
 
     let x = [""], y = [0] 
@@ -48,6 +54,8 @@ export function BarInfo(){
       xlabel = "Products", ylabel = "Quantitys" 
       type = "bar"
     }
+
+    console.log(x, y)
 
     return(
     <div className="w-full h-[60%] flex flex-col justify-center items-center gap-2 ">
