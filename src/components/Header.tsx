@@ -13,34 +13,38 @@ export function Header():JSX.Element{
     const { input, fetchData, setProducts, setProductsCopy, setUser, user } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
     const {data:session} = useSession()
-    const userHeaders = ["Products","Customers","Suppliers"]
     
     useEffect(()=>{
-        const fetchingDbData = async()=>{
-            const res = await (await fetch("api/dbInfo")).json() 
-            const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
-            const header = generalHeaders.filter((e:string) => userHeaders.includes(e))
-            setHeader(header.reverse())
-        }
-        
         const fetchingRol = async()=>{
             const res = await (await fetch(`api/users/findOne/${session?.user.id}`)).json()  
-
-            if (res.id_rol==2) userHeaders.push(...["Bills","Details"])
-                return res.id_rol
+            return res.id_rol
         }
         
+        const fetchingDbData = async()=>{
+            let Headers = []
+            const res = await (await fetch("api/dbInfo")).json() 
+            const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
+            
+            const idRes = await fetchingRol()
+            if (idRes==2) Headers.push("Products","Customers","Suppliers","Bills","Details")
+            else Headers.push("Products","Customers","Suppliers")
+
+            console.log(Headers,generalHeaders)
+            const header = generalHeaders.filter((e:string) => Headers.includes(e))
+            setHeader(header.reverse())
+        }
+
         const setSession = () =>{
-            const {name, email} = session?.user || {}
-            setUser({name, email})
-          }
-      
+          const {name, email} = session?.user || {}
+          setUser({name, email})
+        }
+          
         setSession()
         fetchingRol()
         fetchingDbData()
     },[session])
     
-    
+
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
         setSection!(header)
         

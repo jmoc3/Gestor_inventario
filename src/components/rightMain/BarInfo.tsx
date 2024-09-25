@@ -18,8 +18,9 @@ export function BarInfo(){
     let x = [""], y = [0] 
     let xlabel = "", ylabel = ""
     let type = ""
-
+    console.log(productsCopy[0])
     if (productsCopy.length!=0 && Object.keys(productsCopy[0]).includes("location")){
+      console.log(Object.keys(productsCopy[0]))
       const locations = productsCopy.map(e => e.location)
       const groupLocations = locations.map(e=> e!.split(" ").slice(1).join(" "))
       const donutData = ((getTopRecords(countFrequencies(groupLocations),10)))
