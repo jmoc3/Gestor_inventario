@@ -11,7 +11,6 @@ export function TopLeft({title}:{title:string}):JSX.Element{
 
           if (!Object.keys(e).includes("name")){
               const id = `${e.id}`
-              console.log
               return id.includes(inputText)       
           }
           const name = e.name.toLowerCase()
@@ -19,7 +18,7 @@ export function TopLeft({title}:{title:string}):JSX.Element{
       
       });     
       setProductsCopy(productsFiltered)   
-        setInput(inputText)
+      setInput(inputText)
     }
 
     return (

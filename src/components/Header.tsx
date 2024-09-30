@@ -29,7 +29,6 @@ export function Header():JSX.Element{
             if (idRes==2) Headers.push("Products","Customers","Suppliers","Bills","Details")
             else Headers.push("Products","Customers","Suppliers")
 
-            console.log(Headers,generalHeaders)
             const header = generalHeaders.filter((e:string) => Headers.includes(e))
             setHeader(header.reverse())
         }
