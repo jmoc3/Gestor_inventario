@@ -8,13 +8,13 @@ export async function GET(req:Request){
       const url = new URL(req.url);
       const id = +url.pathname.split('/').pop()!; 
       
-      const user = await prisma.bills.findUnique({
+      const bill = await prisma.bills.findUnique({
           where: {
               id
             }
         })
 
-      return NextResponse.json(user)
+      return NextResponse.json(bill)
   } catch (error){
     return NextResponse.json(error)
   } 

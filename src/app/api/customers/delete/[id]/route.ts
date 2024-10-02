@@ -3,20 +3,22 @@ import { PrismaClient } from "@prisma/client"
   
 const prisma = new PrismaClient()
 
-export async function GET(req:Request){
+export async function DELETE(request:Request){
   try{
-    const url = new URL(req.url);
+
+    const url = new URL(request.url);
     const id = +url.pathname.split('/').pop()!; 
     
-    const detail = await prisma.details.findUnique({
-        where: {
-            id
-          }
-      })
+    const delRes = await prisma.customers.delete({
+      where: {
+        id
+      }
+    })
+    
+    return NextResponse.json(delRes)
 
-    return NextResponse.json(detail)
   } catch (error){
     return NextResponse.json(error)
   } 
-
+  
 }
