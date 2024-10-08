@@ -42,13 +42,15 @@ const handler = NextAuth({
         const token = jwt.sign({
           exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
           email:userFound.email,
-          name:userFound.name
+          name:userFound.name,
+          id_rol:userFound.id_rol
         },process.env.SECRET as string)
 
         return {
           id:userFound.id,
           name:userFound.name,
           email:userFound.email,
+          id_rol:userFound.id_rol,
           accessToken:token
         } as any
        

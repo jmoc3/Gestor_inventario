@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios"
 import { useState } from "react"
 import { inputHandler } from "@/src/services/inputHadler"
 import Notify from "@/src/services/Notify"
+import { toCapitalize } from "@/src/helpers/string.helper"
 
 export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) => {
 
@@ -14,7 +15,7 @@ export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
     if (formData.password!=formData.confirmPassword) return alert('The passwords has to be the same')
     
     try {
-
+      
       await axios.post('/api/auth/register',
       { name:formData.name,
         email:formData.email,
@@ -28,7 +29,7 @@ export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
       
     } catch (error) {
       if (error instanceof AxiosError) {
-        Notify({message:error.response?.data.message,backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'}})        
+        Notify({message:toCapitalize(error.response?.data.message),backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'}})        
       }
     }
   }

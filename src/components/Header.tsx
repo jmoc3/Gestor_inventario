@@ -15,18 +15,13 @@ export function Header():JSX.Element{
     const {data:session} = useSession()
     
     useEffect(()=>{
-        const fetchingRol = async()=>{
-            const res = await (await fetch(`api/users/findOne/${session?.user.id}`)).json()  
-            return res.id_rol
-        }
-        
+
         const fetchingDbData = async()=>{
             let Headers = []
             const res = await (await fetch("api/dbInfo")).json() 
             const generalHeaders = res.map((e:Record<string,string>)=>e.table_name)
             
-            const idRes = await fetchingRol()
-            if (idRes==2) Headers.push("Products","Customers","Suppliers","Bills","Details")
+            if (session?.user.id_rol==2) Headers.push("Products","Customers","Suppliers","Bills","Details")
             else Headers.push("Products","Customers","Suppliers")
 
             const header = generalHeaders.filter((e:string) => Headers.includes(e))
@@ -39,7 +34,6 @@ export function Header():JSX.Element{
         }
           
         setSession()
-        fetchingRol()
         fetchingDbData()
     },[session])
     
