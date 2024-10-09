@@ -31,7 +31,7 @@ export function TableMain():JSX.Element{
     const {data:session} = useSession()
     
     type Data = typeof productsCopy[0]
-    const result =  Object.keys(products[0]).map((key,id) => {
+    const result =  Object.keys(products[0]).map((key) => {
       return {
         name: toCapitalize(key),
         uid: key,

@@ -10,6 +10,6 @@ type Product = {
     product_id: number
 }
 
-type Credentials = { [key:string]:string }
+type Credentials = { [key:string]:string|number }
 
 export type { Product, Credentials }

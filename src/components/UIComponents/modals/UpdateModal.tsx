@@ -5,14 +5,15 @@ import { SectionProvider } from "@/src/app/home/page";
 import { inputHandler } from "@/src/services/inputHadler"
 import Notify from "@/src/services/Notify";
 import { toCapitalize } from "@/src/helpers/string.helper";
+import { useProductStore } from "@/src/store/products";
 
 export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:number, onOpenChange:()=>void}) {
 
-  const [formData, setFormData] = useState<Record<string,string>>({})
+  const { products,productsCopy } = useProductStore()
+  const [formData, setFormData] = useState<Record<string,string|number>>({})
   const section = useContext(SectionProvider)
-
+    
   useEffect(()=>{
-    setFormData({})
     const getData = async () =>{
       
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/${id}`)
@@ -20,7 +21,7 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
       const data:Record<string, any> = {}
       Object.entries(res).map(([key,value])=>{
         if (key=="id") return
-        data[key] = String(value)
+        data[key] = value
       })
       setFormData(data)
     }  
@@ -29,17 +30,18 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
   },[id,section])
 
   const handleSubmit = async(onClose:()=>void) => {
-    console.log(formData)
-    // const resUpdate = await fetch(`/api/${section.toLowerCase()}/update/${id}`,{
-    //   method:'PUT',
-    //   headers:{
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(formData)
-    // })
 
-    // if (resUpdate.ok) Notify({message:"User Updated succesfully",backgroundColor:'#183B2A',color:'#18C764'})
+    const resUpdate = await fetch(`/api/${section.toLowerCase()}/update/${id}`,{
+      method:'PUT',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const res = await resUpdate.json()
+    if (res.response=="ok") Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})
 
+    console.log(products,productsCopy)
     // setUser({...formData})
     onClose()
   }
@@ -54,8 +56,8 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
                 <form autoComplete="off" >
                     <ModalBody className="gap-4">
                       {
-                        Object.entries(formData).map(([key,value])=>(
-                          <Input isRequired type="text" name={key} label={toCapitalize(key)} className="max-w-xs flex" variant="underlined" value={formData[value]} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                        Object.entries(formData).map(([key,_])=>(
+                          <Input isRequired type="text" name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${formData[key]}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
   
                         ))
                       }

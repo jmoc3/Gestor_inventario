@@ -8,7 +8,7 @@ import { toCapitalize } from "@/src/helpers/string.helper"
 
 export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) => {
 
-  const [formData, setFormData] = useState<Record<string,string>>({})
+  const [formData, setFormData] = useState<Record<string,string|number>>({})
 
   const handleSubmit = async(onClose:()=>void) => {
     
@@ -43,10 +43,10 @@ export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
             <ModalHeader className="flex flex-col gap-1 text-xl">Create a new account</ModalHeader>
             <form autoComplete="off" >
               <ModalBody className="gap-4">
-                <Input isRequired type="name" name="name" label="Name" className="max-w-xs" variant="underlined" value={formData.name} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
-                <Input isRequired type="email" name="email" label="Email" className="max-w-xs" variant="underlined" value={formData.email} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
-                <Input isRequired type="password" name="password" label="Password" className="max-w-xs" variant="faded" value={formData.password} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
-                <Input isRequired type="confirmPassword" name="confirmPassword" label="Confirm Password" className="max-w-xs" variant="faded" value={formData.confirmPassword} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                <Input isRequired type="name" name="name" label="Name" className="max-w-xs" variant="underlined" value={`${formData.name}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                <Input isRequired type="email" name="email" label="Email" className="max-w-xs" variant="underlined" value={`${formData.email}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                <Input isRequired type="password" name="password" label="Password" className="max-w-xs" variant="faded" value={`${formData.password}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                <Input isRequired type="confirmPassword" name="confirmPassword" label="Confirm Password" className="max-w-xs" variant="faded" value={`${formData.confirmPassword}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
               </ModalBody>
               <ModalFooter className="gap-4">
                 <Link color="danger" onPress={onClose} className="text-xs cursor-pointer">
