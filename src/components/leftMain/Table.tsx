@@ -17,7 +17,7 @@ import UpdateModal from "../UIComponents/modals/UpdateModal"
 export function TableMain():JSX.Element{
   const { products, productsCopy } = useProductStore()
   const [page, setPage] = useState(1);
-  
+  console.log(products)
   const rowsPerPage = 9;
   const pages = Math.ceil(productsCopy.length / rowsPerPage);
   

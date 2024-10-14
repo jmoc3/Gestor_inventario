@@ -15,7 +15,6 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
     
   useEffect(()=>{
     const getData = async () =>{
-      
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/${id}`)
       const res = await resGetData.json()
       const data:Record<string, any> = {}
@@ -38,12 +37,11 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
       },
       body: JSON.stringify(formData)
     })
+    
     const res = await resUpdate.json()
-    if (res.response=="ok") Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})
+    if (res.response=="ok") onClose(); Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})
 
-    console.log(products,productsCopy)
     // setUser({...formData})
-    onClose()
   }
 
 
