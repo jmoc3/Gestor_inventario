@@ -11,7 +11,7 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
 
   const { products,productsCopy } = useProductStore()
   const [formData, setFormData] = useState<Record<string,string|number>>({})
-  const section = useContext(SectionProvider)
+  const section = useContext(SectionProvider)!
     
   useEffect(()=>{
     const getData = async () =>{
@@ -54,8 +54,8 @@ export default function App({isOpen, id, onOpenChange}:{isOpen:boolean, id:numbe
                 <form autoComplete="off" >
                     <ModalBody className="gap-4">
                       {
-                        Object.entries(formData).map(([key,_])=>(
-                          <Input isRequired type="text" name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${formData[key]}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                        Object.entries(formData).map(([key,id])=>(
+                          <Input isRequired type="text" key={id} name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${formData[key]}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
   
                         ))
                       }

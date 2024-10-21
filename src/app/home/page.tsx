@@ -5,11 +5,11 @@ import { Main } from "@/src/components/Main";
 import { useProductStore } from "../../store/products";
 import { useState, useEffect, createContext } from "react";
 
-export const SectionProvider = createContext<string>("")
+export const SectionProvider = createContext<string>("Products")
 export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
 
 export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
-export const InputTextContext = createContext('');
+export const InputTextContext = createContext("");
 
 export default function Home() {
   const [section, setSection] = useState<string>("Products")
@@ -40,3 +40,4 @@ export default function Home() {
     </main>
   );
 }
+
