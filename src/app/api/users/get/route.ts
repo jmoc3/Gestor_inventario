@@ -6,7 +6,9 @@ const prisma = new PrismaClient()
 export async function GET(){
     try{
 
-      const supliers = await prisma.users.findMany()
+      const supliers = await prisma.users.findMany({orderBy: {
+        id: 'asc'
+      }})
       return NextResponse.json(supliers)
     
     } catch (error){

@@ -17,14 +17,13 @@ export default function Home() {
   
   useEffect(()=>{
     const fetchingData = async()=>{
-      const data = await fetchData("products")
-      
+      const data = await fetchData(section.toLowerCase())
       setProducts(data)
       setProductsCopy(data)
     }
 
     fetchingData()
-  },[])
+  },[section])
   
   
   return (

@@ -1,13 +1,7 @@
 import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
-import Notify from "@/src/services/Notify";
 
 export default function App({isOpen, onOpenChange, deleteLogic, description}:{isOpen:boolean, onOpenChange:()=>void, deleteLogic:()=>void, description:string}) {
-
-  const {data:session} = useSession()
-
 
   return (
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -24,7 +18,7 @@ export default function App({isOpen, onOpenChange, deleteLogic, description}:{is
                 <Button color="primary" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="danger" variant="light"  onPress={()=>{deleteLogic();onClose()}}>
+                <Button color="danger" variant="light"  onPress={()=>{onClose();deleteLogic()}}>
                   Delete
                 </Button>
               </ModalFooter>
