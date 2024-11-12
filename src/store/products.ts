@@ -5,7 +5,8 @@ type States = {
     products: Product[],
     productsCopy: Product[],
     user: Record<string,string|number>,
-    input: string
+    input: string,
+    isLoadSection: boolean
 }
 
 type Actions = {
@@ -13,6 +14,7 @@ type Actions = {
     setProductsCopy: (products:Product[])=>void,
     setUser: (user:Record<string,string|number>)=>void,
     setInput: (input:string) => void,
+    setIsLoadSection: (status:boolean)=>void,
     fetchData: (table:string)=>Promise<Product[]>
 }
 
@@ -21,10 +23,12 @@ export const useProductStore = create<States & Actions>()((set,get)=>({
     productsCopy: [],
     user: {},
     input: "",
-    setInput: (input:string)=>set({input}),
+    isLoadSection: false,
     setProducts: (products)=>set({products}),
     setProductsCopy: (productsCopy)=>set({productsCopy}),
     setUser: (user)=>set({user}),
+    setInput: (input:string)=>set({input}),
+    setIsLoadSection: (status:boolean)=>set({isLoadSection:status}),
     fetchData: async(table:string) => {
         return await (await fetch(`/api/${table}/get`)).json()
     }

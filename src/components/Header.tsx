@@ -10,7 +10,7 @@ import { useProductStore } from "../store/products";
 export function Header():JSX.Element{
     const setSection = useContext(SetSectionProvider)
     
-    const { input, fetchData, setProducts, setProductsCopy, setUser, user } = useProductStore()
+    const { input, isLoadSection, fetchData, setProducts, setProductsCopy, setUser, setIsLoadSection, user } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
     const {data:session} = useSession()
     
@@ -40,25 +40,32 @@ export function Header():JSX.Element{
 
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
         setSection!(header)
-        
-        const fetchingTableData = async()=> {
-            const res = await fetchData(header.toLowerCase())
+        setIsLoadSection(true)
+        console.log(isLoadSection)
+        try{
+
+            const fetchingTableData = async()=> {
+                const res = await fetchData(header.toLowerCase())
             setProducts(res)
-
+            
             const productsFiltered = res.filter(e => {
-
+                
                 if (!Object.keys(e).includes("name")){
                     const id = `${e.id}`
                     return id.includes(input)       
                 }
                 const name = e.name.toLowerCase()
                 return name.includes(input)
-            
+                
             });     
             setProductsCopy(productsFiltered)   
         }
         
         fetchingTableData()
+        } finally {
+            setIsLoadSection(false)
+            console.log(isLoadSection)
+        }
     }
     
     return (

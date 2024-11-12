@@ -10,14 +10,14 @@ import { useContext } from "react";
 
 export function Main():JSX.Element{
     const section = useContext(SectionProvider)
-    const {products, productsCopy} = useProductStore()
-
+    const {products, productsCopy, isLoadSection} = useProductStore()
+    
     return(
       <div className="mx-32 flex">
         <div className="w-2/4 h-[80vh] flex flex-col justify-center items-center border-r border-zinc-500">
           <TopLeft title={section} />
           {
-            products.length!=0 ? 
+            (products.length!=0 && !isLoadSection) ?
             <TableMain/> : <CircularProgress aria-label="Loading..." />               
           }
         </div>
