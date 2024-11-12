@@ -15,7 +15,7 @@ import DeleteModal from "../UIComponents/modals/DeleteModal"
 import UpdateModal from "../UIComponents/modals/UpdateModal"
 
 export function TableMain():JSX.Element{
-  const { products, productsCopy } = useProductStore()
+  const { products, productsCopy, setProducts, setProductsCopy, fetchData } = useProductStore()
   const [page, setPage] = useState(1);
 
   const rowsPerPage = 9;
@@ -54,9 +54,15 @@ export function TableMain():JSX.Element{
         method: 'DELETE'
       })
       const delRes = await delResPromise.json()
-      console.log(delRes)
+
       if(!Object.keys(delRes).includes("id")) return Notify({message:`${section} row with id ${rowSelected} is called in another table`,backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'},duration:5000})
-        
+
+      if(section!="Users"){
+        const reFetch = await fetchData(section.toLowerCase())
+        setProducts(reFetch)
+        setProductsCopy(reFetch)
+      } 
+      
       return Notify({message:`${section} deletion completed`,backgroundColor:'#183B2A',color:'#18C764'})
     }
     

@@ -9,6 +9,8 @@ import { useProductStore } from "@/src/store/products";
 
 export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) {
 
+  const {setProducts, setProductsCopy, fetchData} = useProductStore()
+
   const [formData, setFormData] = useState<Record<string,string|number>>({})
   const section = useContext(SectionProvider)!
     
@@ -39,9 +41,19 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
     
     const res = await resCreate.json()
 
-    if (Object.keys(res).includes("Message")){onClose(); return Notify({message:`${section.slice(0,-1)} created succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
-    if (res.meta.field_name="Products_supplier_id_fkey (index)") return Notify({message:"Supplier doesn't exist" ,backgroundColor:'#441729',color:'#F53859'})
     
+    if (!Object.keys(res).includes("Message")){
+      if (res.meta.field_name="Products_supplier_id_fkey (index)") return Notify({message:"Supplier doesn't exist" ,backgroundColor:'#441729',color:'#F53859'})
+      return Notify({message:"Something went wrong" ,backgroundColor:'#441729',color:'#F53859'})
+    }
+    
+    onClose()
+    if(section!="Users"){
+      const reFetch = await fetchData(section.toLowerCase())
+      setProducts(reFetch)
+      setProductsCopy(reFetch)
+    } 
+    return Notify({message:`${section.slice(0,-1)} created succesfully `,backgroundColor:'#183B2A',color:'#18C764'})
   }
 
   return (
