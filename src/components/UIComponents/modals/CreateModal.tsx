@@ -54,7 +54,7 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
                     <ModalBody className="gap-4">
                       {
                         Object.keys(formData).map((key,id)=>(
-                          <Input isRequired type="text" key={id} name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${formData[key]}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
+                          <Input isRequired type="text" key={id} name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${formData[key]==""?"":formData[key]}`} onChange={(e)=>inputHandler(e,formData,setFormData)}/>
   
                         ))
                       }

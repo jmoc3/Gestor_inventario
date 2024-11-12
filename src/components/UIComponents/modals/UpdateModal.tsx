@@ -15,7 +15,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     
   useEffect(()=>{
     if(modalCase=="profile") section="Users"
-    console.log(section)
+
     const getData = async () =>{
       console.log(section)
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/${id}`)
@@ -43,8 +43,8 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     
     const res = await resUpdate.json()
     if (res.response=="ok") {onClose(); Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
+    if(section=="Users") setUser({...formData})
 
-  //  if(section=="Users") setUser({...formData})
   }
 
   return (

@@ -4,14 +4,14 @@ import { Product } from "../types/types";
 type States = {
     products: Product[],
     productsCopy: Product[],
-    user: Record<string,string>,
+    user: Record<string,string|number>,
     input: string
 }
 
 type Actions = {
     setProducts: (products:Product[])=>void,
     setProductsCopy: (products:Product[])=>void,
-    setUser: (user:Record<string,string>)=>void,
+    setUser: (user:Record<string,string|number>)=>void,
     setInput: (input:string) => void,
     fetchData: (table:string)=>Promise<Product[]>
 }
