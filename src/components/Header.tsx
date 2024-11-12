@@ -76,7 +76,7 @@ export function Header():JSX.Element{
                 </ul>
             </div>
             <div className="flex justify-center items-center cursor-pointer">    
-                <PopOver name={user.name} description={user.email} img={user.image!}/>
+                <PopOver name={user.name as string} description={user.email as string} img={user.image! as string}/>
             </div>  
         </div>
     )

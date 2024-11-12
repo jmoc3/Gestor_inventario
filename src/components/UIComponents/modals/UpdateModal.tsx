@@ -9,7 +9,7 @@ import { useProductStore } from "@/src/store/products";
 
 export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:boolean, id?:number, modalCase?:string, onOpenChange:()=>void}) {
 
-  const {setUser} = useProductStore()
+  const {products,setProducts, setProductsCopy, setUser, fetchData} = useProductStore()
   const [formData, setFormData] = useState<Record<string,string|number>>({})
   let section = useContext(SectionProvider)!
     
@@ -17,7 +17,6 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     if(modalCase=="profile") section="Users"
 
     const getData = async () =>{
-      console.log(section)
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/${id}`)
       const res = await resGetData.json()
       const data:Record<string, any> = {}
@@ -43,8 +42,14 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     
     const res = await resUpdate.json()
     if (res.response=="ok") {onClose(); Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
-    if(section=="Users") setUser({...formData})
 
+    if(section!="Users"){
+      const reFetch = await fetchData(section.toLowerCase())
+      setProducts(reFetch)
+      setProductsCopy(reFetch)
+    } 
+
+    setUser({...formData})
   }
 
   return (
@@ -57,7 +62,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
                     <ModalBody className="gap-4">
                       {
                         Object.entries(formData).map(([key,value])=>(
-                          <Input isRequired type="text" key={key} name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${value==""?"":value}`} onChange={(e)=>{console.log(value);inputHandler(e,formData,setFormData)}}/>
+                          <Input isRequired type="text" key={key} name={key} label={toCapitalize(key)} className="max-w-xs flex"  variant="underlined" value={`${value==""?"":value}`} onChange={(e)=>{inputHandler(e,formData,setFormData)}}/>
   
                         ))
                       }

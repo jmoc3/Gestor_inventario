@@ -11,7 +11,7 @@ import { useContext } from "react";
 export function Main():JSX.Element{
     const section = useContext(SectionProvider)
     const {products, productsCopy} = useProductStore()
-    console.log(products,productsCopy)
+
     return(
       <div className="mx-32 flex">
         <div className="w-2/4 h-[80vh] flex flex-col justify-center items-center border-r border-zinc-500">
