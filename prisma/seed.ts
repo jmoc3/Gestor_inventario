@@ -45,6 +45,10 @@ const detailsData = Array.from({length:20}).map(()=>({
     bill_id:faker.number.int({min:1,max:20})
 }))
 
+const rolesData = [{name:"user"},{name:"admin"}]
+
+const usersData = [{email:"jmoc951@gmail.com",name:"Jose Orejarena",password:"$2a$12$ZLMOUT4B/2m8cQDXryX3jOE5zC9hLY3Bf8oUasSjBhGHnupHRgkQm",id_rol:2}]
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -54,6 +58,7 @@ async function main() {
     await prisma.bills.deleteMany({})
     await prisma.customers.deleteMany({})
     await prisma.suppliers.deleteMany({})
+    await prisma.roles.deleteMany({})
 
     await prisma.suppliers.createMany({ data:uniquesuppliersData, skipDuplicates:true })
 
@@ -64,7 +69,10 @@ async function main() {
     await prisma.bills.createMany({ data:billsData, skipDuplicates:true })
 
     await prisma.details.createMany({ data:detailsData, skipDuplicates:true})
-
+    
+    await prisma.roles.createMany({ data:rolesData, skipDuplicates:true})
+    
+    await prisma.users.createMany({ data:usersData, skipDuplicates:true})
 }
 
 main()
