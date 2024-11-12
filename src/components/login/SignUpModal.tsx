@@ -8,7 +8,7 @@ import { toCapitalize } from "@/src/helpers/string.helper"
 
 export const SignUpModal = ({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange:()=>void}) => {
 
-  const [formData, setFormData] = useState<Record<string,string|number>>({})
+  const [formData, setFormData] = useState<Record<string,string|number>>({name:"",email:"",password:"",confirmPassword:""})
 
   const handleSubmit = async(onClose:()=>void) => {
     

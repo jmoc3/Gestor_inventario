@@ -50,8 +50,8 @@ export default function LogIn(){
           <div className="flex flex-col gap-8 items-end">
             <div className="flex flex-col gap-6"> 
 
-              <Input isRequired type="email" name="email" label="Email" value={`${credentials.email}`} className="max-w-xs" onChange={(e)=>inputHandler(e,credentials, setCredentials)} />
-              <Input isRequired name="password" type={isVisible ? "text" : "password"} label="Password" value={`${credentials.password}`} className="max-w-xs" 
+              <Input isRequired type="email" name="email" label="Email" value={`${credentials.email==""?"":credentials.email}`} className="max-w-xs" onChange={(e)=>inputHandler(e,credentials, setCredentials)} />
+              <Input isRequired name="password" type={isVisible ? "text" : "password"} label="Password" value={`${credentials.password==""?"":credentials.password}`} className="max-w-xs" 
                 endContent={
                   <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
                       {isVisible ? (

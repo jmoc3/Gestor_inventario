@@ -37,7 +37,7 @@ export default function App() {
           <ListboxItem key="delete" className="text-danger text-center" color="danger" onPress={onOpenDelete}>Eliminar perfil </ListboxItem>
         </Listbox>
       </ListboxWrapper> 
-      <UpdateModal isOpen={isOpenUpdate} onOpenChange={onOpenChangeUpdate} />
+      <UpdateModal isOpen={isOpenUpdate} onOpenChange={onOpenChangeUpdate} modalCase="profile" id={session?.user.id}/>
       <DeleteModal isOpen={isOpenDelete} onOpenChange={onOpenChangeDelete} deleteLogic={deleteUserLogic} description="With this decision you will delete all the data that this account has and any possibility of accessing it, are you sure you want to delete it?"/> 
     </div>
   );
