@@ -47,24 +47,6 @@ export function TableMain():JSX.Element{
       
     const section = useContext(SectionProvider)
     const [rowSelected,setRowSelected] = useState<number>()
-
-    const deleteFunction = async () =>{
-      
-      const delResPromise = await fetch(`/api/${section.toLowerCase()}/delete/${rowSelected}`,{
-        method: 'DELETE'
-      })
-      const delRes = await delResPromise.json()
-
-      if(!Object.keys(delRes).includes("id")) return Notify({message:`${section} row with id ${rowSelected} is called in another table`,backgroundColor:'#441729',color:'#F53859',extraStyles:{zIndex:'60'},duration:5000})
-
-      if(section!="Users"){
-        const reFetch = await fetchData(section.toLowerCase())
-        setProducts(reFetch)
-        setProductsCopy(reFetch)
-      } 
-      
-      return Notify({message:`${section} deletion completed`,backgroundColor:'#183B2A',color:'#18C764'})
-    }
     
     const {isOpen:isOpenDelete, onOpen: onOpenDelete, onOpenChange:onOpenChangeDelete} = useDisclosure();
     const {isOpen:isOpenUpdate, onOpen: onOpenUpdate, onOpenChange:onOpenChangeUpdate} = useDisclosure();
@@ -127,7 +109,7 @@ export function TableMain():JSX.Element{
           )}
         </TableBody>
       </Table>
-      <DeleteModal isOpen={isOpenDelete} onOpenChange={onOpenChangeDelete} deleteLogic={deleteFunction} description={`Do you really want to delete this ${section.slice(0, -1).toLowerCase()}?`}/> 
+      <DeleteModal isOpen={isOpenDelete} onOpenChange={onOpenChangeDelete} id={rowSelected!} description={`Do you really want to delete this ${section.slice(0, -1).toLowerCase()}?`}/> 
       <UpdateModal isOpen={isOpenUpdate} onOpenChange={onOpenChangeUpdate} id={rowSelected!} /> 
     </>
       );}

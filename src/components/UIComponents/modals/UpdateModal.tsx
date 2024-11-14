@@ -11,7 +11,9 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
 
   const {products,setProducts, setProductsCopy, setUser, fetchData} = useProductStore()
   const [formData, setFormData] = useState<Record<string,string|number>>({})
-  let section = useContext(SectionProvider)!
+  const [counter, setCounter] = useState<number>(0)
+
+  let section = useContext(SectionProvider)
     
   useEffect(()=>{
     if(modalCase=="profile") section="Users"
@@ -31,6 +33,10 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
   },[id,modalCase])
 
   const handleSubmit = async(onClose:()=>void) => {
+    setCounter(counter+1)
+    if (counter!=1){
+      return
+    }
     if(modalCase=="profile") section="Users"
     const resUpdate = await fetch(`/api/${section.toLowerCase()}/update/${id}`,{
       method:'PUT',
@@ -40,6 +46,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
       body: JSON.stringify(formData)
     })
     
+    setCounter(0)
     const res = await resUpdate.json()
     if (res.response=="ok") {onClose(); Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
 

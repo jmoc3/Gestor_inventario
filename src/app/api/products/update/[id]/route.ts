@@ -15,7 +15,6 @@ export async function PUT(req:Request){
             data,
           })
         
-        console.log(updatedProduct)
         return NextResponse.json({response:"ok"})
     }catch (error){
         console.log(error)

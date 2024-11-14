@@ -12,8 +12,10 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
   const {setProducts, setProductsCopy, fetchData} = useProductStore()
 
   const [formData, setFormData] = useState<Record<string,string|number>>({})
+  const [counter, setCounter] = useState<number>(0)
+
   const section = useContext(SectionProvider)!
-    
+  
   useEffect(()=>{
     const getData = async () =>{
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/1`)
@@ -26,11 +28,14 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
       setFormData(data)
     }  
     getData()
-
   },[section])
 
   const handleSubmit = async(onClose:()=>void) => {
-
+    setCounter(counter+1)
+    if (counter!=1){
+      return
+    }
+    
     const resCreate = await fetch(`/api/${section.toLowerCase()}/create`,{
       method:'POST',
       headers:{
@@ -38,9 +43,8 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
       },
       body: JSON.stringify(formData)
     })
-    
+    setCounter(0)
     const res = await resCreate.json()
-
     
     if (!Object.keys(res).includes("Message")){
       if (res.meta.field_name="Products_supplier_id_fkey (index)") return Notify({message:"Supplier doesn't exist" ,backgroundColor:'#441729',color:'#F53859'})
