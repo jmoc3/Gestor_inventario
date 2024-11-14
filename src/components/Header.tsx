@@ -1,4 +1,4 @@
-import { SetSectionProvider } from "../app/home/page";
+import { SectionProvider, SetSectionProvider } from "../app/home/page";
 import Image from "next/image"
 import PopOver from "@/src/components/UIComponents/UserListBox/PopOver"
 
@@ -8,10 +8,11 @@ import React, { useState, useEffect, useContext } from "react"
 import { useProductStore } from "../store/products";
 
 export function Header():JSX.Element{
+    const section = useContext(SectionProvider)
     const setSection = useContext(SetSectionProvider)
     
     const { input, fetchData, setProducts, setProductsCopy, setUser, user } = useProductStore()
-    const [headers, setHeader] = useState<string[]>([])
+    const [headers, setHeaders] = useState<string[]>([])
     const {data:session} = useSession()
     
     useEffect(()=>{
@@ -25,7 +26,7 @@ export function Header():JSX.Element{
             else Headers.push("Products","Customers","Suppliers")
 
             const header = generalHeaders.filter((e:string) => Headers.includes(e))
-            setHeader(header.reverse())
+            setHeaders(header.reverse())
         }
 
         const setSession = async () =>{
@@ -49,7 +50,7 @@ export function Header():JSX.Element{
 
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
       setSection!(header)
-
+        
       const fetchingTableData = async()=> {
         const res = await fetchData(header.toLowerCase())
         setProducts(res)
@@ -78,7 +79,7 @@ export function Header():JSX.Element{
                 <ul className="flex items-center cursor-pointer ">
                     {
                         headers.map((item,key)=>(
-                            <li key={key} className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300 focus:bg-violet-700" onClick={liClickEvent(item)}>{item}</li>
+                            <li key={key} className={`text-white rounded px-5 py-8  hover:bg-[#9C8D89] ${item==section ? "bg-[#D5C1BC] text-[#282828] font-bold ":""} transition ease-in duration-300`} onClick={liClickEvent(item)}>{item}</li>
                         ))
                     }
                 </ul>
