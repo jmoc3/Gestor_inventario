@@ -9,15 +9,14 @@ import { useProductStore } from "@/src/store/products";
 
 export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:boolean, id?:number, modalCase?:string, onOpenChange:()=>void}) {
 
-  const {products,setProducts, setProductsCopy, setUser, fetchData} = useProductStore()
+  const { user, setProducts, setProductsCopy, setUser, fetchData} = useProductStore()
   const [formData, setFormData] = useState<Record<string,string|number>>({})
   const [counter, setCounter] = useState<number>(0)
-
   let section = useContext(SectionProvider)
-    
+  
   useEffect(()=>{
     if(modalCase=="profile") section="Users"
-
+    
     const getData = async () =>{
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/${id}`)
       const res = await resGetData.json()
@@ -29,9 +28,9 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
       setFormData(data)
     }  
     getData()
-
+    
   },[id,modalCase])
-
+  
   const handleSubmit = async(onClose:()=>void) => {
     setCounter(counter+1)
     if (counter!=1){
@@ -55,7 +54,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
       setProducts(reFetch)
       setProductsCopy(reFetch)
     } 
-
+    console.log(formData)
     setUser({...formData})
   }
 

@@ -10,7 +10,7 @@ import { useProductStore } from "../store/products";
 export function Header():JSX.Element{
     const setSection = useContext(SetSectionProvider)
     
-    const { input, isLoadSection, fetchData, setProducts, setProductsCopy, setUser, setIsLoadSection, user } = useProductStore()
+    const { input, fetchData, setProducts, setProductsCopy, setUser, user } = useProductStore()
     const [headers, setHeader] = useState<string[]>([])
     const {data:session} = useSession()
     
@@ -28,44 +28,41 @@ export function Header():JSX.Element{
             setHeader(header.reverse())
         }
 
-        const setSession = () =>{
-          const {name, email} = session?.user || {}
+        const setSession = async () =>{
+          const resGetUserData = await fetch(`/api/users/findOne/${session?.user.id}`)
+          let userData = await resGetUserData.json()
+          if (!userData.id){
+            userData = {}
+          }
+          
+          const {name, email} = userData
           setUser({name, email})
         }
           
         setSession()
         fetchingDbData()
     },[session])
-    
 
     const liClickEvent = (header:string)=>(e:React.MouseEvent<HTMLLIElement>)=>{
-        setSection!(header)
-        setIsLoadSection(true)
-        console.log(isLoadSection)
-        try{
+      setSection!(header)
 
-            const fetchingTableData = async()=> {
-                const res = await fetchData(header.toLowerCase())
-            setProducts(res)
-            
-            const productsFiltered = res.filter(e => {
-                
-                if (!Object.keys(e).includes("name")){
-                    const id = `${e.id}`
-                    return id.includes(input)       
-                }
-                const name = e.name.toLowerCase()
-                return name.includes(input)
-                
-            });     
-            setProductsCopy(productsFiltered)   
-        }
+      const fetchingTableData = async()=> {
+        const res = await fetchData(header.toLowerCase())
+        setProducts(res)
         
-        fetchingTableData()
-        } finally {
-            setIsLoadSection(false)
-            console.log(isLoadSection)
-        }
+        const productsFiltered = res.filter(e => {
+            
+          if (!Object.keys(e).includes("name")){
+            const id = `${e.id}`
+            return id.includes(input)       
+          }
+          const name = e.name.toLowerCase()
+          return name.includes(input)
+            
+        });     
+        setProductsCopy(productsFiltered)   
+      }
+      fetchingTableData()
     }
     
     return (

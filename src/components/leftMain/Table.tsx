@@ -2,7 +2,7 @@
 
 import { useProductStore } from "@/src/store/products";
 import { useState, useMemo, useCallback, useContext } from "react";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, getKeyValue, Tooltip} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Tooltip} from "@nextui-org/react";
 import { DeleteIcon } from "../UIComponents/DeleteIcon";
 import { EditIcon } from "../UIComponents/EditionIcon";
 import { toCapitalize } from "@/src/helpers/string.helper";
@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 import { SectionProvider } from "@/src/app/home/page";
 import {useDisclosure} from "@nextui-org/react";
 
-import Notify from "@/src/services/Notify";
 import DeleteModal from "../UIComponents/modals/DeleteModal"
 import UpdateModal from "../UIComponents/modals/UpdateModal"
 
