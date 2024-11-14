@@ -25,7 +25,6 @@ export default function Home() {
     fetchingData()
   },[section])
   
-  
   return (
     <main className={`w-full min-h-screen`}>
 

@@ -29,14 +29,18 @@ export function Header():JSX.Element{
         }
 
         const setSession = async () =>{
-          const resGetUserData = await fetch(`/api/users/findOne/${session?.user.id}`)
-          let userData = await resGetUserData.json()
-          if (!userData.id){
-            userData = {}
+          let userData 
+          if(session?.user.provider!="credentials"){
+            userData = session?.user
+          }else{
+            const resGetUserData = await fetch(`/api/users/findOne/${session?.user.id}`)
+            userData = await resGetUserData.json()
+            if (!userData.id){
+                userData = {}
+            }
           }
-          
-          const {name, email} = userData
-          setUser({name, email})
+          const {name, email, image} = userData
+          setUser({name, email, image})
         }
           
         setSession()
@@ -74,7 +78,7 @@ export function Header():JSX.Element{
                 <ul className="flex items-center cursor-pointer ">
                     {
                         headers.map((item,key)=>(
-                            <li key={key} className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300" onClick={liClickEvent(item)}>{item}</li>
+                            <li key={key} className="hover:bg-zinc-500 px-5 py-8 transition ease-in duration-300 focus:bg-violet-700" onClick={liClickEvent(item)}>{item}</li>
                         ))
                     }
                 </ul>

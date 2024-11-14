@@ -37,10 +37,18 @@ export default function LogIn(){
 
           <div className="flex flex-col gap-6">
 
-          <Button className="py-[1.5rem]" onClick={()=>{signIn('github',{callbackUrl:'/home'})}}>
+            <Button className="py-[1.5rem]" onClick={()=>{
+              if(!navigator.onLine) return Notify({message:'Please check your internet connection',backgroundColor:'#441729',color:'#F53859'})
+              
+              signIn('github',{callbackUrl:'/home'})
+              }}>
               <FaGithub className="text-black-400 text-3xl" />
             </Button>
-            <Button className="py-[1.5rem] " onClick={()=>{signIn('google',{callbackUrl:'/home'})}}>
+            <Button className="py-[1.5rem] " onClick={()=>{
+              if(!navigator.onLine) return Notify({message:'Please check your internet connection',backgroundColor:'#441729',color:'#F53859'})
+            
+              signIn('google',{callbackUrl:'/home'})
+              }}>
               <GoogleLog />
             </Button>
           </div>

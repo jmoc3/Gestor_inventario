@@ -33,9 +33,11 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
   
   const handleSubmit = async(onClose:()=>void) => {
     setCounter(counter+1)
+    console.log(counter)
     if (counter!=1){
       return
     }
+
     if(modalCase=="profile") section="Users"
     const resUpdate = await fetch(`/api/${section.toLowerCase()}/update/${id}`,{
       method:'PUT',
@@ -47,15 +49,19 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     
     setCounter(0)
     const res = await resUpdate.json()
-    if (res.response=="ok") {onClose(); Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
+    
+    onClose();
+    if (res.response=="ok") { Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
 
     if(section!="Users"){
       const reFetch = await fetchData(section.toLowerCase())
       setProducts(reFetch)
       setProductsCopy(reFetch)
-    } 
-    console.log(formData)
-    setUser({...formData})
+    } else{
+
+      setUser({...formData})
+    }
+    console.log(formData,section)
   }
 
   return (
