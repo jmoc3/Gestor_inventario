@@ -79,7 +79,7 @@ export function Header():JSX.Element{
                 <ul className="flex items-center cursor-pointer ">
                     {
                         headers.map((item,key)=>(
-                            <li key={key} className={`text-white rounded px-5 py-8  hover:bg-[#9C8D89] ${item==section ? "bg-[#D5C1BC] text-[#282828] font-bold ":""} transition ease-in duration-300`} onClick={liClickEvent(item)}>{item}</li>
+                            <li key={key} className={`text-white rounded px-5 py-8  ${item==section ? "text-[#D5C1BC] font-bold ":""} transition ease-in duration-300`} onClick={liClickEvent(item)}>{item}</li>
                         ))
                     }
                 </ul>
