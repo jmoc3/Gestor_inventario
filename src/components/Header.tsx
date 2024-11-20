@@ -71,7 +71,7 @@ export function Header():JSX.Element{
       fetchingTableData()
     }
 
-    const [hiddenHeader, setHiddenHeader] = useState<boolean>(true)
+    const [hiddenHeader, setHiddenHeader] = useState<boolean>(false)
 
     const headerIconEvent = ()=>setHiddenHeader(!hiddenHeader)
     
@@ -82,7 +82,7 @@ export function Header():JSX.Element{
             </div>
             <div className="flex flex-col items-center gap-5 sm:flex-row">
                 <BsMenuButtonWideFill className="text-4xl sm:hidden" onClick={headerIconEvent}/>
-                <ul className={`flex ${hiddenHeader ? "hidden" : ""} flex-col sm:flex-row items-center cursor-pointer`}>
+                <ul  className={`flex ${hiddenHeader ? "max-h-0" : "max-h-[30rem]"} flex-col sm:flex-row items-center cursor-pointer transition-all duration-700 ease-in-out overflow-hidden`}               >
                     {
                         headers.map((item,key)=>(
                             <li key={key} className={`text-white rounded px-5 py-8  ${item==section ? "text-[#D5C1BC] font-bold ":""} transition ease-in duration-300`} onClick={liClickEvent(item)}>{item}</li>
@@ -90,7 +90,7 @@ export function Header():JSX.Element{
                     }
                 </ul>
             </div>
-            <div className={`flex ${hiddenHeader ? "" : "hidden"} sm:block justify-center items-center cursor-pointer`}>    
+            <div className={`flex ${hiddenHeader ? "opacity-1" : "opacity-0"} sm:block justify-center items-center cursor-pointer transition-all duration-700 ease-in-out`}>    
                 <PopOver name={user.name as string} description={user.email as string} img={user.image! as string}/>
             </div>  
         </div>

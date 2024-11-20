@@ -16,11 +16,11 @@ export function StadisticInfo(){
     });
 
     return (
-      <div className="w-full h-[40%] flex flex-col justify-center items-center gap-6 border-b border-zinc-500 ">
+      <div className="w-full py-8 sm:h-[40%] flex flex-col justify-center items-center gap-8 sm:border-b border-zinc-500 bg-slate-200 text-black sm:text-inherit sm:bg-inherit">
         <div className="flex flex-col items-center">
-          <h4 className="text-3xl">Stadistic Information</h4>
+          <h4 className="text-3xl text-center">Stadistic Information</h4>
         </div>
-      <div className="w-full flex gap-[5rem] justify-center">
+      <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-[5rem] justify-center">
         {
           productsCopy.length!=0 && Object.keys(productsCopy[0]).includes("price") ?(
             <div className="flex flex-col items-center gap-4">

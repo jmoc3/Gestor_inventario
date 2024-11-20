@@ -31,7 +31,7 @@ export function TopLeft({title}:{title:string}):JSX.Element{
     const visible = session?.user.id_rol == 2
 
     return (
-      <div className="space-y-2 h-2/6 flex flex-col justify-center">
+      <div className="space-y-2 flex flex-col justify-center">
         <h2 className="text-5xl">{title}</h2>
         <div className="flex flex-col gap-2 ">
           <span>Search some {title.slice(0,-1).toLowerCase()}</span>

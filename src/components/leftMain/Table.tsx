@@ -14,7 +14,7 @@ import DeleteModal from "../UIComponents/modals/DeleteModal"
 import UpdateModal from "../UIComponents/modals/UpdateModal"
 
 export function TableMain():JSX.Element{
-  const { products, productsCopy, setProducts, setProductsCopy, fetchData } = useProductStore()
+  const { products, productsCopy } = useProductStore()
   const [page, setPage] = useState(1);
 
   const rowsPerPage = 9;
@@ -91,7 +91,7 @@ export function TableMain():JSX.Element{
                 />
             </div>
           }
-          className="h-4/6 px-16"
+          className="h-4/6 sm:px-16"
           >
         <TableHeader columns={result}>
           {(column) => (

@@ -13,15 +13,15 @@ export function Main():JSX.Element{
     const { products } = useProductStore()
     
     return(
-      <div className="mx-32 flex">
-        <div className="w-2/4 h-[80vh] flex flex-col justify-center items-center border-r border-zinc-500">
+      <div className="flex flex-col gap-8 sm:gap-0 sm:flex-row sm:mx-32 justify-center items-center">
+        <div className="w-3/4 sm:w-2/4 h-[80vh] flex flex-col gap-8 justify-center items-center sm:border-r sm:border-zinc-500">
           <TopLeft title={section} />
           {
             products.length!=0 ?
             <TableMain/> : <CircularProgress aria-label="Loading..." />               
           }
         </div>
-        <div className="w-2/4 h-[80vh] flex flex-col items-center gap-8 ">
+        <div className="w-full sm:w-2/4 h-[80vh] flex flex-col items-center gap-8 ">
           <StadisticInfo />
           <BarInfo />
         </div>
