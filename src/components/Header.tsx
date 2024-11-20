@@ -1,6 +1,7 @@
 import { SectionProvider, SetSectionProvider } from "../app/home/page";
 import Image from "next/image"
 import PopOver from "@/src/components/UIComponents/UserListBox/PopOver"
+import { BsMenuButtonWideFill } from "react-icons/bs";
 
 import { useSession } from "next-auth/react";
 
@@ -69,14 +70,19 @@ export function Header():JSX.Element{
       }
       fetchingTableData()
     }
+
+    const [hiddenHeader, setHiddenHeader] = useState<boolean>(true)
+
+    const headerIconEvent = ()=>setHiddenHeader(!hiddenHeader)
     
     return (
-        <div className="flex mx-32  justify-between items-center border-b border-zinc-500 select-none">
-            <div className="flex w-22 h-fit rounded-full overflow-hidden ">
+        <div className="flex flex-col sm:flex-row gap-8 py-16 sm:py-0 mx-32 justify-center sm:justify-between items-center border-b border-zinc-500 select-none">
+            <div className="hidden sm:flex w-22 h-fit rounded-full overflow-hidden ">
                 <Image alt="logo" width={40} height={0} src="https://images.unsplash.com/photo-1722459154931-74de2a3acccc?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
             </div>
-            <div className="flex ">
-                <ul className="flex items-center cursor-pointer ">
+            <div className="flex flex-col items-center gap-5 sm:flex-row">
+                <BsMenuButtonWideFill className="text-4xl sm:hidden" onClick={headerIconEvent}/>
+                <ul className={`flex ${hiddenHeader ? "hidden" : ""} flex-col sm:flex-row items-center cursor-pointer`}>
                     {
                         headers.map((item,key)=>(
                             <li key={key} className={`text-white rounded px-5 py-8  ${item==section ? "text-[#D5C1BC] font-bold ":""} transition ease-in duration-300`} onClick={liClickEvent(item)}>{item}</li>
@@ -84,7 +90,7 @@ export function Header():JSX.Element{
                     }
                 </ul>
             </div>
-            <div className="flex justify-center items-center cursor-pointer">    
+            <div className={`flex ${hiddenHeader ? "" : "hidden"} sm:block justify-center items-center cursor-pointer`}>    
                 <PopOver name={user.name as string} description={user.email as string} img={user.image! as string}/>
             </div>  
         </div>
