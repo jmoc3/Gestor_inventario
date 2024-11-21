@@ -32,9 +32,9 @@ export function BarChart ({labels, quantity, type}:{labels:string[],quantity:num
     responsive: true
     };
 
-  if (type == "bar") return <div className='w-3/4'><Bar data={data} options={options} className='w-full h-full'/></div>;
-  if (type == "dou") return <div><Doughnut data={data} options={options} className='w-full h-full'/></div>;
-  if (type == "polar") return <div><PolarArea data={data} options={options} /></div>
+  if (type == "bar") return <div className='w-3/4'><Bar data={data} options={options} className='w-full h-content'/></div>;
+  if (type == "dou") return <div><Doughnut data={data} options={options} className='w-full h-content'/></div>;
+  if (type == "polar") return <div><PolarArea data={data} options={options} className='w-full h-content' /></div>
   else return <div><Line data={data} options={options} /> </div>
 
 };

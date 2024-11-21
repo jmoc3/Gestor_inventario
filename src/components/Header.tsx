@@ -90,7 +90,7 @@ export function Header():JSX.Element{
                     }
                 </ul>
             </div>
-            <div className={`flex ${hiddenHeader ? "opacity-1" : "opacity-0"} sm:block justify-center items-center cursor-pointer transition-all duration-700 ease-in-out`}>    
+            <div className={`flex ${hiddenHeader ? "opacity-1" : "opacity-0"} sm:!opacity-1 sm:block justify-center items-center cursor-pointer transition-all duration-700 ease-in-out`}>    
                 <PopOver name={user.name as string} description={user.email as string} img={user.image! as string}/>
             </div>  
         </div>
