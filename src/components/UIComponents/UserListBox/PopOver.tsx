@@ -1,5 +1,5 @@
 import React from "react";
-import {Popover, PopoverTrigger, PopoverContent, User, image} from "@nextui-org/react";
+import {Popover, PopoverTrigger, PopoverContent, User} from "@nextui-org/react";
 import {UserCard} from "./UserCard";
 
 export default function App({name,description,img}:{name:string,description:string,img:string}) {
