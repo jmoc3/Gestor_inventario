@@ -8,9 +8,6 @@ import { useState, useEffect, createContext } from "react";
 export const SectionProvider = createContext<string>("Products")
 export const SetSectionProvider = createContext<React.Dispatch<React.SetStateAction<string>> | null>(null)
 
-export const setInputTextContext = createContext<React.Dispatch<React.SetStateAction<string>>| null>(null);
-export const InputTextContext = createContext("");
-
 export default function Home() {
   const [section, setSection] = useState<string>("Products")
   const { setProducts, setProductsCopy, fetchData} = useProductStore()

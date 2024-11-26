@@ -1,7 +1,7 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import NextuiProvider from "./nextuiprovider";
-import { SessionProviderComponent } from "./providers/SessionProvider";
+import SessionProviderComponent from "./providers/SessionProvider";
 
 const inter = Quicksand({ subsets: ["latin"] });
 
