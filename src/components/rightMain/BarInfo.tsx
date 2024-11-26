@@ -57,10 +57,10 @@ export function BarInfo(){
 
 
     return(
-    <div className="w-full flex flex-col justify-center items-center py-16 sm:py-0 gap-8 bg-[#282828] ">
+    <div className="w-full flex flex-col justify-center items-center py-16 sm:py-0 bg-[#282828] ">
       <div className="flex gap-8 text-xl justify-center items-center">
         <BsChevronBarRight className="opacity-[0.4] hover:opacity-[0.7] "/>
-          <h4 className="text-3xl text-center">Data distribution</h4>
+          <h4 className="text-2xl text-center">Data distribution</h4>
         <BsChevronBarLeft className="opacity-[0.4] hover:opacity-[0.7] "/>
       </div>
         {

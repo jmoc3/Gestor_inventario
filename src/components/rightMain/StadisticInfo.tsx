@@ -16,9 +16,11 @@ export function StadisticInfo(){
     });
 
     return (
-      <div className="w-full py-8 sm:h-[40%] flex flex-col justify-center items-center gap-8 sm:border-b border-zinc-500 bg-slate-200 text-black sm:text-inherit sm:bg-[#e0e0e0] shadow-[#inset 20px 20px 60px #bebebe] rounded-[50px]   ">
+      <div className=" py-8 sm:p-12  sm:my-8 sm:h-[40%] flex flex-col justify-center items-center gap-8 bg-slate-200 sm:bg-none text-black sm:text-inherit sm:bg-[#282828] rounded-[50px]" style={{
+        boxShadow: "inset 14px 14px 31px #101010, inset -14px -14px 31px #404040",
+      }}>
         <div className="flex flex-col items-center">
-          <h4 className="text-3xl text-center">Stadistic Information</h4>
+          <h4 className="text-2xl text-center">Stadistic Information</h4>
         </div>
       <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-[5rem] justify-center">
         {

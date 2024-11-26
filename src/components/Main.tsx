@@ -21,7 +21,7 @@ export function Main():JSX.Element{
             <TableMain/> : <CircularProgress aria-label="Loading..." />               
           }
         </div>
-        <div className="w-full sm:w-2/4 h-[80vh] flex flex-col items-center gap-8 ">
+        <div className="w-full sm:w-2/4 flex flex-col items-center gap-8 ">
           <StadisticInfo />
           <BarInfo />
         </div>
