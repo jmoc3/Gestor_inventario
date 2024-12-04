@@ -54,6 +54,7 @@ export function Header():JSX.Element{
       setSection!(header)
         
       const fetchingTableData = async()=> {
+        console.log(header)
         const res = await fetchData(header.toLowerCase())
         setProducts(res)
         

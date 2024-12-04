@@ -51,6 +51,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     const res = await resUpdate.json()
     
     onClose();
+    
     if (res.response=="ok") { Notify({message:`${section.slice(0,-1)} updated succesfully `,backgroundColor:'#183B2A',color:'#18C764'})}
 
     if(section!="Users"){

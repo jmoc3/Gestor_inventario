@@ -13,7 +13,7 @@ export function TopLeft({title}:{title:string}):JSX.Element{
     const {data:session} = useSession()
 
     const inputChangeController = (e:React.ChangeEvent<HTMLInputElement>) => {
-        const inputText = e.target.value
+        const inputText = (e.target.value).toLowerCase()
         const productsFiltered = products.filter(e => {
 
           if (!Object.keys(e).includes("name")){

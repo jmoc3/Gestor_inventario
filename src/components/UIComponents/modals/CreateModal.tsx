@@ -21,6 +21,7 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
       const resGetData = await fetch(`/api/${section.toLowerCase()}/findOne/1`)
       const res = await resGetData.json()
       const data:Record<string, any> = {}
+      console.log(res)
       Object.keys(res).map((key)=>{
         if (key=="id") return
         data[key] = ""
@@ -35,7 +36,7 @@ export default function App({isOpen, onOpenChange}:{isOpen:boolean, onOpenChange
     if (counter!=1){
       return
     }
-    
+
     const resCreate = await fetch(`/api/${section.toLowerCase()}/create`,{
       method:'POST',
       headers:{
