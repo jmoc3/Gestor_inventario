@@ -22,6 +22,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
       const res = await resGetData.json()
       const data:Record<string, any> = {}
       Object.entries(res).map(([key,value])=>{
+        console.log(key,value)
         if (key=="id" || ["id","password","id_rol","createdAt","updatedAt"].includes(key)) return
         data[key] = value
       })
@@ -29,7 +30,7 @@ export default function App({isOpen, id, modalCase="",  onOpenChange}:{isOpen:bo
     }  
     getData()
     
-  },[id,modalCase])
+  },[id,modalCase,section])
   
   const handleSubmit = async(onClose:()=>void) => {
     setCounter(counter+1)
